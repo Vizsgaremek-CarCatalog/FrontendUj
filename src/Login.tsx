@@ -8,8 +8,8 @@ type LoginProps = {
 };
 
 const Login: React.FC<LoginProps> = ({ onLogin, theme }) => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [email, setEmail] = useState<string>("Fleta.Mraz-Caaaaaassin@gmail.com");
+  const [password, setPassword] = useState<string>("ASDaaa123###");
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
