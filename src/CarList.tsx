@@ -12,13 +12,13 @@ interface Car {
 }
 
 interface CarListProps {
-  theme: "green-white" | "dark-light"; // Assuming two theme options
+  theme: "green-white" | "dark-light" | "blue-gray"; // Added new theme option
 }
 
 const CarList: React.FC<CarListProps> = ({ theme }) => {
   const [cars, setCars] = useState<Car[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [selectedCar, setSelectedCar] = useState<number | null>(null); // Track selected car by ID
+  const [selectedCar, setSelectedCar] = useState<number | null>(null);
 
   useEffect(() => {
     axios.get("http://localhost:3000/carcatalog")
@@ -30,43 +30,36 @@ const CarList: React.FC<CarListProps> = ({ theme }) => {
   }, []);
 
   // Determine the theme class
-  const themeClass = theme === "green-white" ? "bg-light" : "bg-dark text-white";
-
-  // Handle car selection (clicking on image or name)
-  const handleCarClick = (id: number) => {
-    if (selectedCar === id) {
-      setSelectedCar(null); // If the car is already selected, deselect it
-    } else {
-      setSelectedCar(id); // Select the car to show details
-    }
-  };
+  const themeClass = theme === "green-white" ? "bg-light" 
+    : theme === "dark-light" ? "bg-dark text-white" 
+    : "bg-blue-gray text-dark";
 
   return (
     <div className={`container mt-5 ${themeClass}`}>
       <h1 className="text-center mb-4">Car Catalog</h1>
-
       {error && <p className="text-danger text-center">{error}</p>}
-
       {cars.length > 0 ? (
         <div className="row">
           {cars.map((car) => (
             <div key={car.id} className="col-md-4 mb-4">
-              <div className="card shadow-sm">
+              <div className="card shadow-sm border-0 rounded-3">
                 <img
-                  src={car.imageUrl || "https://via.placeholder.com/400x250?text=Car+Image"} // Placeholder image
+                  src={car.imageUrl || "https://via.placeholder.com/400x250?text=Car+Image"}
                   className="card-img-top"
                   alt={car.vehicle}
-                  onClick={() => handleCarClick(car.id)} // Click to show/hide details
-                  style={{ cursor: "pointer" }}
+                  onClick={() => setSelectedCar(selectedCar === car.id ? null : car.id)}
+                  style={{ cursor: "pointer", transition: "0.3s", borderRadius: "10px" }}
                 />
-                <div className="card-body">
-                  <h5 className="card-title" onClick={() => handleCarClick(car.id)} style={{ cursor: "pointer" }}>
+                <div className="card-body text-center">
+                  <h5 
+                    className="card-title fw-bold text-primary" 
+                    onClick={() => setSelectedCar(selectedCar === car.id ? null : car.id)}
+                    style={{ cursor: "pointer" }}
+                  >
                     {car.vehicle}
                   </h5>
-
-                  {/* Show car details if this car is selected */}
                   {selectedCar === car.id && (
-                    <div>
+                    <div className="text-muted">
                       <p><strong>Type:</strong> {car.type}</p>
                       <p><strong>Manufacturer:</strong> {car.manufacturer}</p>
                       <p><strong>Color:</strong> {car.color}</p>
@@ -79,7 +72,7 @@ const CarList: React.FC<CarListProps> = ({ theme }) => {
           ))}
         </div>
       ) : (
-        <p className="text-center">No cars found.</p>
+        <p className="text-center text-secondary">No cars found.</p>
       )}
     </div>
   );

@@ -29,8 +29,8 @@ const Login: React.FC<LoginProps> = ({ onLogin, theme }) => {
   };
 
   return (
-    <div className={`container d-flex justify-content-center align-items-center ${theme === "green-white" ? "bg-light" : "bg-dark text-white"}`} style={{ height: "100vh" }}>
-      <div className="card shadow-lg p-4" style={{ width: "400px" }}>
+    <div className={`min-vh-100 d-flex justify-content-center align-items-center ${theme === "red-black" ? "bg-dark text-light" : "bg-dark text-white"}`}>
+      <div className={`card shadow-lg p-4 ${theme === "red-black" ? "bg-danger text-light" : "bg-primary text-white"}`} style={{ width: "400px" }}>
         <h2 className="text-center mb-4">Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
@@ -57,10 +57,9 @@ const Login: React.FC<LoginProps> = ({ onLogin, theme }) => {
               required
             />
           </div>
-          <button type="submit" className={`btn ${theme === "green-white" ? "btn-success" : "btn-dark"} w-100`}>Login</button>
+          <button type="submit" className={`btn ${theme === "red-black" ? "btn-light" : "btn-dark"} w-100`}>Login</button>
         </form>
       </div>
-      
     </div>
   );
 };

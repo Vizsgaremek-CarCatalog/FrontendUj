@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import axios from "./axiosConfig";
 import { useNavigate } from "react-router-dom";
+import { Form, Button, Alert, Spinner } from "react-bootstrap";
 
-const Register: React.FC = () => {
+const Register: React.FC<{ theme: string }> = ({ theme }) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
@@ -39,51 +40,45 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="container d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
-      <div className="card shadow-lg p-4" style={{ width: "400px" }}>
+    <div className={`min-vh-100 d-flex justify-content-center align-items-center ${theme === "red-black" ? "bg-dark text-light" : "bg-dark text-white"}`}>
+      <div className={`card shadow-lg p-4`} style={{ width: "400px", backgroundColor: theme === "red-black" ? "#D32F2F" : "#283593", color: theme === "red-black" ? "#FFFFFF" : "#FFFFFF" }}>
         <h2 className="text-center mb-4">Register</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">Email address</label>
-            <input
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3" controlId="formEmail">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
               type="email"
-              id="email"
-              className="form-control"
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">Password</label>
-            <input
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
               type="password"
-              id="password"
-              className="form-control"
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
-            <input
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formConfirmPassword">
+            <Form.Label>Confirm Password</Form.Label>
+            <Form.Control
               type="password"
-              id="confirmPassword"
-              className="form-control"
               placeholder="Confirm your password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
-            {errorMessage && <p className="text-danger">{errorMessage}</p>}
-          </div>
-          <button type="submit" className="btn btn-dark w-100" disabled={loading}>
-            {loading ? 'Registering...' : 'Register'}
-          </button>
-        </form>
+          </Form.Group>
+          {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+          <Button variant="danger" type="submit" disabled={loading} className="w-100">
+            {loading ? <Spinner animation="border" size="sm" /> : "Register"}
+          </Button>
+        </Form>
       </div>
     </div>
   );

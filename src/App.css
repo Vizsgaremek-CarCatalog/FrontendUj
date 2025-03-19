@@ -1,0 +1,60 @@
+/* Red-Black Theme */
+.red-black-theme {
+    background-color: #000000;
+    color: #ffffff;
+  }
+  
+  .red-black-theme .navbar {
+    background-color: #dc3545;
+  }
+  
+  .red-black-theme .navbar-brand,
+  .red-black-theme .nav-link {
+    color: #ffffff;
+  }
+  
+  .red-black-theme .card {
+    background-color: #dc3545;
+    color: #ffffff;
+  }
+  
+  .red-black-theme .btn-primary {
+    background-color: #dc3545;
+    border-color: #dc3545;
+  }
+  
+  .red-black-theme .btn-primary:hover {
+    background-color: #c82333;
+    border-color: #c82333;
+  }
+  
+  /* Blue-Black Theme */
+  .blue-black-theme {
+    background-color: #000000;
+    color: #ffffff;
+  }
+  
+  .blue-black-theme .navbar {
+    background-color: #007bff;
+  }
+  
+  .blue-black-theme .navbar-brand,
+  .blue-black-theme .nav-link {
+    color: #ffffff;
+  }
+  
+  .blue-black-theme .card {
+    background-color: #007bff;
+    color: #ffffff;
+  }
+  
+  .blue-black-theme .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .blue-black-theme .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+  }
+  
