@@ -3,77 +3,80 @@ import axios from "./axiosConfig";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Alert, Spinner } from "react-bootstrap";
 
-const Register: React.FC<{ theme: string }> = ({ theme }) => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [errorMessage, setErrorMessage] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
+const Register: React.FC = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [role, setRole] = useState("USER");
+  const [adminPassword, setAdminPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
     if (password !== confirmPassword) {
       setErrorMessage("Passwords do not match!");
       return;
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setErrorMessage("Please enter a valid email address.");
-      return;
-    }
-
     setLoading(true);
-
     try {
-      await axios.post("http://localhost:3000/users/", { email, password });
+      interface UserData {
+        email: string;
+        password: string;
+        role: string;
+        adminPassword?: string;
+      }
+      const userData: UserData = { email, password, role };
+      if (role === "ADMIN") {
+        userData.adminPassword = adminPassword;
+      }
+      await axios.post("http://localhost:3000/users/", userData);
       alert("Registration successful! Please log in.");
       navigate("/login");
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Registration failed", error);
-      setErrorMessage(error.response?.data?.message || "Registration failed");
+      if (axios.isAxiosError(error) && error.response?.data?.message) {
+        setErrorMessage(error.response.data.message);
+      } else {
+        setErrorMessage("Registration failed");
+      }
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className={`min-vh-100 d-flex justify-content-center align-items-center ${theme === "red-black" ? "bg-dark text-light" : "bg-dark text-white"}`}>
-      <div className={`card shadow-lg p-4`} style={{ width: "400px", backgroundColor: theme === "red-black" ? "#D32F2F" : "#283593", color: theme === "red-black" ? "#FFFFFF" : "#FFFFFF" }}>
+    <div className="min-vh-100 d-flex justify-content-center align-items-center bg-dark text-white">
+      <div className="card shadow-lg p-4" style={{ width: "400px", backgroundColor: "#283593", color: "#FFFFFF" }}>
         <h2 className="text-center mb-4">Register</h2>
         <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3" controlId="formEmail">
+          <Form.Group className="mb-3">
             <Form.Label>Email address</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+            <Form.Control type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formPassword">
+          <Form.Group className="mb-3">
             <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formConfirmPassword">
+          <Form.Group className="mb-3">
             <Form.Label>Confirm Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Confirm your password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-            />
+            <Form.Control type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
           </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Role</Form.Label>
+            <Form.Select value={role} onChange={(e) => setRole(e.target.value)} required>
+              <option value="USER">User</option>
+              <option value="ADMIN">Admin</option>
+            </Form.Select>
+          </Form.Group>
+          {role === "ADMIN" && (
+            <Form.Group className="mb-3">
+              <Form.Label>Admin Password</Form.Label>
+              <Form.Control type="password" value={adminPassword} onChange={(e) => setAdminPassword(e.target.value)} required />
+            </Form.Group>
+          )}
           {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
           <Button variant="danger" type="submit" disabled={loading} className="w-100">
             {loading ? <Spinner animation="border" size="sm" /> : "Register"}

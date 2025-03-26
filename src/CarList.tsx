@@ -5,10 +5,15 @@ interface Car {
   id: number;
   vehicle: string;
   type: string;
-  manufacturer: string;
   color: string;
   fuel: string;
-  imageUrl?: string; // Optional property for the image
+  manufacturer: string;
+  mass: number;
+  imageUrl?: string;
+  price: number;
+  description: string;
+  yearMade: number;
+  horsePower: number;
 }
 
 interface CarListProps {
