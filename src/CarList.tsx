@@ -48,13 +48,12 @@ const CarList: React.FC<CarListProps> = ({ theme }) => {
           {cars.map((car) => (
             <div key={car.id} className="col-md-4 mb-4">
               <div className="card shadow-sm border-0 rounded-3">
-                <img
-                  src={car.imageUrl || "https://via.placeholder.com/400x250?text=Car+Image"}
-                  className="card-img-top"
-                  alt={car.vehicle}
-                  onClick={() => setSelectedCar(selectedCar === car.id ? null : car.id)}
-                  style={{ cursor: "pointer", transition: "0.3s", borderRadius: "10px" }}
-                />
+              <img
+  src={car.imageUrl || "https://via.placeholder.com/400x250?text=Car+Image"}
+  className="car-img"
+  alt={car.vehicle}
+  onClick={() => setSelectedCar(selectedCar === car.id ? null : car.id)}
+/>
                 <div className="card-body text-center">
                   <h5 
                     className="card-title fw-bold text-primary" 
@@ -65,10 +64,16 @@ const CarList: React.FC<CarListProps> = ({ theme }) => {
                   </h5>
                   {selectedCar === car.id && (
                     <div className="text-muted">
-                      <p><strong>Type:</strong> {car.type}</p>
                       <p><strong>Manufacturer:</strong> {car.manufacturer}</p>
+                      <p><strong>Type:</strong> {car.type}</p>
                       <p><strong>Color:</strong> {car.color}</p>
                       <p><strong>Fuel:</strong> {car.fuel}</p>
+                      <p><strong>Mass:</strong> {car.mass} Kg</p>
+                      <p><strong>Year Made:</strong> {car.yearMade}</p>
+                      <p><strong>Hors Power:</strong> {car.horsePower}</p>
+                      <p><strong>Description:</strong> {car.description}</p>
+                      <p><strong>Price:</strong>  ${car.price}</p>
+
                     </div>
                   )}
                 </div>
@@ -82,5 +87,4 @@ const CarList: React.FC<CarListProps> = ({ theme }) => {
     </div>
   );
 };
-
 export default CarList;
