@@ -18,11 +18,7 @@ interface Car {
   horsePower: number;
 }
 
-interface CarListProps {
-  theme: "green-white" | "dark-light" | "blue-gray";
-}
-
-const CarList: React.FC<CarListProps> = ({ theme }) => {
+const CarList: React.FC = ({  }) => {
   const [cars, setCars] = useState<Car[]>([]);
   const [filteredCars, setFilteredCars] = useState<Car[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -71,19 +67,14 @@ const CarList: React.FC<CarListProps> = ({ theme }) => {
     setFilteredCars(updatedCars);
   }, [search, sortKey, sortOrder, priceRange, horsePowerRange, filters, cars]);
 
-  const themeClass =
-    theme === "green-white"
-      ? "bg-light"
-      : theme === "dark-light"
-      ? "bg-dark text-white"
-      : "bg-blue-gray text-dark";
+
 
   const handleFilterChange = (filter: keyof typeof filters, value: string) => {
     setFilters((prevFilters) => ({ ...prevFilters, [filter]: value }));
   };
 
   return (
-    <div className={`container mt-5 ${themeClass}`}>
+    <div className={`container mt-5`}>
       <h1 className="text-center mb-4 text-white">A alkalmazás neve</h1>
       {error && <p className="text-danger text-center">{error}</p>}
 
