@@ -75,7 +75,7 @@ const CarList: React.FC = ({  }) => {
 
   return (
     <div className={`container mt-5`}>
-      <h1 className="text-center mb-4 text-white">A alkalmazás neve</h1>
+      <h1 className="text-center mb-4 text-white">Az alkalmazás neve :User </h1>
       {error && <p className="text-danger text-center">{error}</p>}
 
       {/* Search and Sort */}
