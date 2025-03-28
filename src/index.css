@@ -66,4 +66,20 @@
    transition: 0.3s;
    cursor: pointer;
  }
+ /* Add this CSS to make the comparison modal look better */
+.modal-body {
+  padding: 20px;
+}
+.card {
+  border: none;
+  margin: 10px;
+}
+.card img {
+  max-height: 250px;
+  object-fit: cover;
+}
+.card-body {
+  text-align: center;
+}
+
  

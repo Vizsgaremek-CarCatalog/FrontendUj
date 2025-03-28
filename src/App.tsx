@@ -4,11 +4,11 @@ import { BrowserRouter as Router, Routes, Route, Navigate, Link } from "react-ro
 import Login from "./Login";
 import Register from "./Register";
 import CarList from "./CarList";
-import AdminDashboard from "./AdminDashboard";
+import AdminDashboard from "./AdminDashBoard";
 
 const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(!!localStorage.getItem("authToken"));
-  const [isAdmin, setIsAdmin] = useState<boolean>(localStorage.getItem("userRole") === "admin");
+  const [isAdmin, setIsAdmin] = useState<boolean>(false); // Kezdetben nem admin
   const [theme, setTheme] = useState<string>("red-black");
 
   useEffect(() => {
@@ -17,6 +17,11 @@ const App: React.FC = () => {
     setIsLoggedIn(!!token);
     setIsAdmin(userRole === "admin");
   }, []);
+
+  const handleLogin = (role: string) => {
+    setIsLoggedIn(true);
+    setIsAdmin(role === "admin");  // Ha a role 'admin', akkor admin jogosultságot kapunk
+  };
 
   const handleLogout = () => {
     localStorage.clear();
@@ -74,11 +79,11 @@ const App: React.FC = () => {
 
         <div className="container mt-5">
           <Routes>
-            <Route path="/login" element={<Login onLogin={() => setIsLoggedIn(true)} theme={theme} />} />
-            <Route path="/register" element={<Register theme={theme} />} />
-            <Route path="/cars" element={isLoggedIn ? <CarList theme={theme} /> : <Navigate to="/login" />} />
-            <Route path="/admin" element={<AdminDashboard/>} ></Route>
-            <Route path="*" element={<Navigate to={isLoggedIn ? "/cars" : "/login"} />} />
+          <Route path="/login" element={<Login onLogin={handleLogin} theme={theme} />} />
+          <Route path="/register" element={<Register theme={theme} />} />
+          <Route path="/cars" element={isLoggedIn ? <CarList theme={theme} /> : <Navigate to="/login" />} />
+          <Route path="/admin" element={<AdminDashboard></AdminDashboard>} />
+          <Route path="*" element={<Navigate to={isLoggedIn ? "/cars" : "/login"} />} />
           </Routes>
         </div>
       </div>

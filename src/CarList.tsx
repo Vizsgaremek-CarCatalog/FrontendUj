@@ -18,11 +18,12 @@ interface Car {
   horsePower: number;
 }
 
-const CarList: React.FC = ({  }) => {
+const CarList: React.FC = () => {
   const [cars, setCars] = useState<Car[]>([]);
   const [filteredCars, setFilteredCars] = useState<Car[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [selectedCar, setSelectedCar] = useState<number | null>(null);
+  const [selectedCar, setSelectedCar] = useState<number | null>(null);  // For showing details under the image
+  const [selectedCarsForComparison, setSelectedCarsForComparison] = useState<Car[]>([]);
   const [search, setSearch] = useState("");
   const [sortKey, setSortKey] = useState<keyof Car | "">("");
   const [sortOrder, setSortOrder] = useState("asc");
@@ -31,7 +32,7 @@ const CarList: React.FC = ({  }) => {
   const [filters, setFilters] = useState({ type: "", color: "", fuel: "", manufacturer: "" });
 
   const handleCarClick = (carId: number) => {
-    setSelectedCar(selectedCar === carId ? null : carId);
+    setSelectedCar(selectedCar === carId ? null : carId);  // Toggle the car details display
   };
 
   useEffect(() => {
@@ -67,15 +68,23 @@ const CarList: React.FC = ({  }) => {
     setFilteredCars(updatedCars);
   }, [search, sortKey, sortOrder, priceRange, horsePowerRange, filters, cars]);
 
-
-
   const handleFilterChange = (filter: keyof typeof filters, value: string) => {
     setFilters((prevFilters) => ({ ...prevFilters, [filter]: value }));
   };
 
+  const handleComparisonClick = (car: Car) => {
+    if (selectedCarsForComparison.length < 2) {
+      setSelectedCarsForComparison((prev) => [...prev, car]);
+    }
+  };
+
+  const closeComparisonModal = () => {
+    setSelectedCarsForComparison([]);
+  };
+
   return (
-    <div className={`container mt-5`}>
-      <h1 className="text-center mb-4 text-white">Az alkalmazás neve :User </h1>
+    <div className="container mt-5">
+      <h1 className="text-center mb-4 text-white">Car Comparison App</h1>
       {error && <p className="text-danger text-center">{error}</p>}
 
       {/* Search and Sort */}
@@ -103,129 +112,119 @@ const CarList: React.FC = ({  }) => {
         </button>
       </div>
 
-      {/* Price Range */}
-      <div className="mb-3 text-white">
-        <label>Price Range: ${priceRange[0]} - ${priceRange[1]}</label>
+      {/* Price Range Filter */}
+      <div className="mb-3">
+        <h5 className="text-white">Price Range: ${priceRange[0]} - ${priceRange[1]}</h5>
         <Slider
           range
           min={0}
-          max={10000000}
-          step={1000}
-          value={priceRange}
+          max={100000}
+          defaultValue={priceRange}
           onChange={(value) => setPriceRange(value as [number, number])}
         />
       </div>
 
-      {/* Horse Power Range */}
-      <div className="mb-3 text-white">
-        <label>Horse Power Range: {horsePowerRange[0]} - {horsePowerRange[1]}</label>
+      {/* Horse Power Range Filter */}
+      <div className="mb-3">
+        <h5 className="text-white">Horse Power Range: {horsePowerRange[0]} - {horsePowerRange[1]} HP</h5>
         <Slider
           range
           min={0}
-          max={1500}
-          step={10}
-          value={horsePowerRange}
+          max={1000}
+          defaultValue={horsePowerRange}
           onChange={(value) => setHorsePowerRange(value as [number, number])}
         />
       </div>
 
-      {/* Filters */}
-      <div className="mb-3">
-        <select
-          className="form-select"
-          value={filters.type}
-          onChange={(e) => handleFilterChange("type", e.target.value)}
-        >
-          <option value="">Filter by Type</option>
-          <option value="SUV">SUV</option>
-          <option value="Sedan">Sedan</option>
-          <option value="Truck">Truck</option>
-        </select>
-      </div>
-
-      {/* Other filters */}
-      <div className="mb-3">
-        <select
-          className="form-select"
-          value={filters.color}
-          onChange={(e) => handleFilterChange("color", e.target.value)}
-        >
-          <option value="">Filter by Color</option>
-          <option value="Red">Red</option>
-          <option value="Blue">Blue</option>
-          <option value="Black">Black</option>
-          <option value="White">White</option>
-        </select>
-      </div>
-
-      {/* Other filters */}
-      <div className="mb-3">
-        <select
-          className="form-select"
-          value={filters.fuel}
-          onChange={(e) => handleFilterChange("fuel", e.target.value)}
-        >
-          <option value="">Filter by Fuel</option>
-          <option value="Gasoline">Gasoline</option>
-          <option value="Diesel">Diesel</option>
-          <option value="Electric">Electric</option>
-        </select>
-      </div>
-
-      {/* Other filters */}
-      <div className="mb-3">
-        <select
-          className="form-select"
-          value={filters.manufacturer}
-          onChange={(e) => handleFilterChange("manufacturer", e.target.value)}
-        >
-          <option value="">Filter by Manufacturer</option>
-          <option value="Toyota">Toyota</option>
-          <option value="Ford">Ford</option>
-          <option value="BMW">BMW</option>
-        </select>
-      </div>
-
       {/* Car List */}
-      {filteredCars.length > 0 ? (
-        <div className="row">
-          {filteredCars.map((car) => (
-            <div key={car.id} className="col-md-4 mb-4">
-              <div className="card shadow-sm border-0 rounded-3">
-                <img
-                  src={car.imageUrl || "https://via.placeholder.com/400x250?text=Car+Image"}
-                  className="car-img"
-                  alt={car.vehicle}
-                  onClick={() => handleCarClick(car.id)}
-                />
-                <div className="card-body text-center">
-                  <h5
-                    className="card-title fw-bold text-primary"
-                    onClick={() => handleCarClick(car.id)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    {car.vehicle}
-                  </h5>
-                  {selectedCar === car.id && (
-                    <div className="text-muted">
-                      <p><strong>Manufacturer:</strong> {car.manufacturer}</p>
-                      <p><strong>Type:</strong> {car.type}</p>
-                      <p><strong>Color:</strong> {car.color}</p>
-                      <p><strong>Fuel:</strong> {car.fuel}</p>
-                      <p><strong>Mass:</strong> {car.mass} Kg</p>
-                      <p><strong>Year Made:</strong> {car.yearMade}</p>
-                      <p><strong>Horse Power:</strong> {car.horsePower}</p>
-                      <p><strong>Description:</strong> {car.description}</p>
-                      <p><strong>Price:</strong> ${car.price}</p>
+      <div className="row row-cols-1 row-cols-md-4 g-4">
+        {filteredCars.map((car) => (
+          <div key={car.id} className="col">
+            <div className="card shadow-sm border-0 rounded-3">
+              <img
+                src={car.imageUrl || "https://via.placeholder.com/400x250?text=Car+Image"}
+                className="car-img"
+                alt={car.vehicle}
+                onClick={() => handleCarClick(car.id)}  // Toggle car details display
+              />
+              <div className="card-body text-center">
+                <h5
+                  className="card-title fw-bold text-primary"
+                  onClick={() => handleCarClick(car.id)}  // Toggle car details display
+                  style={{ cursor: "pointer" }}
+                >
+                  {car.vehicle}
+                </h5>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => handleComparisonClick(car)}
+                  disabled={selectedCarsForComparison.length >= 2}
+                >
+                  Compare
+                </button>
+              </div>
+
+              {/* Car Details (showing below the image when selected) */}
+              {selectedCar === car.id && (
+                <div className="card-body">
+                         <p><strong>Manufacturer:</strong> {car.manufacturer}</p>
+                        <p><strong>Type:</strong> {car.type}</p>
+                        <p><strong>Price:</strong> ${car.price}</p>
+                        <p><strong>Horse Power:</strong> {car.horsePower}</p>
+                        <p><strong>Year:</strong> {car.color}</p>
+                        <p><strong>Fuel:</strong> {car.fuel}</p>
+                        <p><strong>Mass:</strong> {car.mass}</p>
+                        <p><strong>Year:</strong> {car.yearMade}</p>
+                        <p><strong>Description:</strong> {car.description}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Comparison Modal */}
+      {selectedCarsForComparison.length === 2 && (
+        <div className="modal fade show d-block" style={{ display: 'block' }} tabIndex={-1} role="dialog">
+          <div className="modal-dialog modal-lg" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Compare Cars</h5>
+                <button type="button" className="btn-close" onClick={closeComparisonModal}></button>
+              </div>
+              <div className="modal-body">
+                <div className="d-flex justify-content-between">
+                  {selectedCarsForComparison.map((car, index) => (
+                    <div key={car.id} className="card" style={{ width: '45%' }}>
+                      <img
+                        src={car.imageUrl || "https://via.placeholder.com/400x250?text=Car+Image"}
+                        className="card-img-top"
+                        alt={car.vehicle}
+                      />
+                      <div className="card-body">
+                        <h5 className="card-title">{car.vehicle}</h5>
+                        <p><strong>Manufacturer:</strong> {car.manufacturer}</p>
+                        <p><strong>Type:</strong> {car.type}</p>
+                        <p><strong>Price:</strong> ${car.price}</p>
+                        <p><strong>Horse Power:</strong> {car.horsePower}</p>
+                        <p><strong>Year:</strong> {car.color}</p>
+                        <p><strong>Fuel:</strong> {car.fuel}</p>
+                        <p><strong>Mass:</strong> {car.mass}</p>
+                        <p><strong>Year:</strong> {car.yearMade}</p>
+                        <p><strong>Description:</strong> {car.description}</p>
+                      </div>
                     </div>
-                  )}
+                  ))}
                 </div>
               </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" onClick={closeComparisonModal}>
+                  Close
+                </button>
+              </div>
             </div>
-          ))}
+          </div>
         </div>
-      ) : (
-        <p className="text-center text-secondary">No cars found.</p>
       )}
     </div>
   );
