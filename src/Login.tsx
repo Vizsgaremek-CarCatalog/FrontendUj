@@ -3,7 +3,7 @@ import axios from "./services/axiosConfig";
 import { useNavigate } from "react-router-dom";
 
 type LoginProps = {
-  onLogin: (role: string) => void;  // A role-t is át kell adni a szülő komponensnek
+  onLogin: (role: string) => void;
   theme: string;
 };
 
@@ -15,16 +15,14 @@ const Login: React.FC<LoginProps> = ({ onLogin, theme }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // A login kérés az új role mezőt is visszaadja
       const response = await axios.post("http://localhost:3000/auth/login", { email, password });
-
-      const { token, userid, role } = response.data;  // Az új válaszban ott van a role
+      const { token, userid, role } = response.data;
 
       localStorage.setItem("authToken", token);
       localStorage.setItem("userId", userid);
-      localStorage.setItem("userRole", role);  // Role tárolása a localStorage-ban
+      localStorage.setItem("userRole", role);
 
-      onLogin(role);  // A role átadása a szülőnek
+      onLogin(role);
 
       if (role === "admin") {
         navigate("/admin");
@@ -38,8 +36,8 @@ const Login: React.FC<LoginProps> = ({ onLogin, theme }) => {
   };
 
   return (
-    <div className={`min-vh-100 d-flex justify-content-center align-items-center ${theme === "red-black" ? "bg-dark text-light" : "bg-dark text-white"}`}>
-      <div className={`card shadow-lg p-4 ${theme === "red-black" ? "bg-danger text-light" : "bg-primary text-white"}`} style={{ width: "400px" }}>
+    <div className={`min-vh-100 d-flex justify-content-center align-items-center ${theme}`}>
+      <div className={`card shadow-lg p-4 login-card ${theme}`}>
         <h2 className="text-center mb-4">Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
@@ -47,7 +45,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, theme }) => {
             <input
               type="email"
               id="email"
-              className="form-control"
+              className="form-control custom-input"
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -59,14 +57,14 @@ const Login: React.FC<LoginProps> = ({ onLogin, theme }) => {
             <input
               type="password"
               id="password"
-              className="form-control"
+              className="form-control custom-input"
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
-          <button type="submit" className={`btn ${theme === "red-black" ? "btn-light" : "btn-dark"} w-100`}>Login</button>
+          <button type="submit" className="btn btn-primary w-100 custom-btn">Login</button>
         </form>
       </div>
     </div>

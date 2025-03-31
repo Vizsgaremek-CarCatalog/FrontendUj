@@ -1,0 +1,109 @@
+.car-card {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .car-img {
+    width: 100%; /* Ensure both images take up the same width */
+    height: 250px; /* Set a fixed height */
+    object-fit: cover; /* Prevent distortion */
+  }
+  
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex-grow: 1;
+  }
+  /* ComparisonModal.css */
+.comparison-modal {
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 0.5s ease-in-out;
+  }
+  
+  .comparison-modal-content {
+    background: #2c2c2c;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+  }
+  
+  .comparison-modal-header {
+    background: #1d1d1d;
+    border-bottom: 2px solid #444;
+    color: #fff;
+    padding: 20px;
+    font-size: 1.25rem;
+  }
+  
+  .comparison-modal-title {
+    color: #ff9f00; /* neon orange for the title */
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  .comparison-btn-close {
+    background: none;
+    border: none;
+    color: #ff9f00;
+    font-size: 1.5rem;
+  }
+  
+  .comparison-modal-body {
+    padding: 20px;
+  }
+  
+  .comparison-card {
+    background: #333;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 48%;
+    transition: transform 0.3s ease;
+  }
+  
+  .comparison-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .comparison-card-img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+  }
+  
+  .comparison-card-body {
+    padding: 15px;
+    color: #fff;
+  }
+  
+  .comparison-card-title {
+    color: #ff9f00;
+    font-weight: bold;
+  }
+  
+  .comparison-modal-footer {
+    background: #1d1d1d;
+    border-top: 2px solid #444;
+    padding: 15px;
+    text-align: center;
+  }
+  
+  .comparison-btn-secondary {
+    background: #ff9f00;
+    color: white;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+  }
+  
+  .comparison-btn-secondary:hover {
+    background: #ff7f00;
+  }
+  
+  
