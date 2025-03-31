@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "./axiosConfig";
+import axios from "./services/axiosConfig";
 import { useNavigate } from "react-router-dom";
 
 type LoginProps = {

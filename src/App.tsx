@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate, Link } from "react-ro
 import Login from "./Login";
 import Register from "./Register";
 import CarList from "./CarList";
-import AdminDashboard from "./AdminDashBoard";
+import AdminDashboard from "./AdminDashboard";
 
 const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(!!localStorage.getItem("authToken"));

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "./axiosConfig";
+import axios from "./services/axiosConfig";
 import { Button, Form, ListGroup, Card, Row, Col } from "react-bootstrap";
 
 
