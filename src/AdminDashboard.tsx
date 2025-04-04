@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "./services/axiosConfig";
-import { Button, Form, ListGroup, Card, Row, Col, Container, Collapse } from "react-bootstrap";
-import { FaTrashAlt, FaComments } from "react-icons/fa";
 
 interface Car {
   id: number;
@@ -53,7 +51,6 @@ const AdminDashboard: React.FC = () => {
       const carsResponse = await axios.get("http://localhost:3000/carcatalog");
       setCars(carsResponse.data);
 
-      // Fetch comments for each car
       const commentsByCar: { [key: number]: Comment[] } = {};
       await Promise.all(
         carsResponse.data.map(async (car: Car) => {
@@ -147,208 +144,167 @@ const AdminDashboard: React.FC = () => {
   };
 
   return (
-    <Container className="mt-4">
-      <h1 className="text-center mb-4">Admin Dashboard</h1>
+    <div>
+      <h1>Admin Dashboard</h1>
 
       {/* Add Car Form */}
-      <Card className="mb-4">
-        <Card.Body>
-          <h3>Add New Car</h3>
-          {error && <div className="alert alert-danger">{error}</div>}
-          <Form>
-            <Row>
-              <Col md={6}>
-                <Form.Group controlId="vehicle">
-                  <Form.Label>Vehicle Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter vehicle name"
-                    value={newCar.vehicle}
-                    onChange={(e) => setNewCar({ ...newCar, vehicle: e.target.value })}
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group controlId="type">
-                  <Form.Label>Car Type</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter car type"
-                    value={newCar.type}
-                    onChange={(e) => setNewCar({ ...newCar, type: e.target.value })}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
-                <Form.Group controlId="color">
-                  <Form.Label>Car Color</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter car color"
-                    value={newCar.color}
-                    onChange={(e) => setNewCar({ ...newCar, color: e.target.value })}
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group controlId="fuel">
-                  <Form.Label>Fuel Type</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter fuel type"
-                    value={newCar.fuel}
-                    onChange={(e) => setNewCar({ ...newCar, fuel: e.target.value })}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
-                <Form.Group controlId="manufacturer">
-                  <Form.Label>Manufacturer</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter manufacturer"
-                    value={newCar.manufacturer}
-                    onChange={(e) => setNewCar({ ...newCar, manufacturer: e.target.value })}
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group controlId="mass">
-                  <Form.Label>Mass (kg)</Form.Label>
-                  <Form.Control
-                    type="number"
-                    placeholder="Enter mass in kg"
-                    value={newCar.mass}
-                    onChange={(e) => setNewCar({ ...newCar, mass: +e.target.value })}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
-                <Form.Group controlId="imageUrl">
-                  <Form.Label>Image URL</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter image URL"
-                    value={newCar.imageUrl}
-                    onChange={(e) => setNewCar({ ...newCar, imageUrl: e.target.value })}
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group controlId="price">
-                  <Form.Label>Price</Form.Label>
-                  <Form.Control
-                    type="number"
-                    placeholder="Enter price"
-                    value={newCar.price}
-                    onChange={(e) => setNewCar({ ...newCar, price: +e.target.value })}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
-                <Form.Group controlId="description">
-                  <Form.Label>Description</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    placeholder="Enter description"
-                    value={newCar.description}
-                    onChange={(e) => setNewCar({ ...newCar, description: e.target.value })}
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group controlId="yearMade">
-                  <Form.Label>Year Made</Form.Label>
-                  <Form.Control
-                    type="number"
-                    value={newCar.yearMade}
-                    onChange={(e) => setNewCar({ ...newCar, yearMade: +e.target.value })}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
-                <Form.Group controlId="horsePower">
-                  <Form.Label>Horse Power</Form.Label>
-                  <Form.Control
-                    type="number"
-                    value={newCar.horsePower}
-                    onChange={(e) => setNewCar({ ...newCar, horsePower: +e.target.value })}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Button variant="primary" onClick={addCar} disabled={isSubmitting} className="mt-3">
-              {isSubmitting ? "Adding..." : "Add Car"}
-            </Button>
-          </Form>
-        </Card.Body>
-      </Card>
+      <div>
+        <h3>Add New Car</h3>
+        {error && <div>{error}</div>}
+        <div>
+          <div>
+            <label htmlFor="vehicle">Vehicle Name</label>
+            <input
+              type="text"
+              id="vehicle"
+              placeholder="Enter vehicle name"
+              value={newCar.vehicle}
+              onChange={(e) => setNewCar({ ...newCar, vehicle: e.target.value })}
+            />
+          </div>
+          <div>
+            <label htmlFor="type">Car Type</label>
+            <input
+              type="text"
+              id="type"
+              placeholder="Enter car type"
+              value={newCar.type}
+              onChange={(e) => setNewCar({ ...newCar, type: e.target.value })}
+            />
+          </div>
+          <div>
+            <label htmlFor="color">Car Color</label>
+            <input
+              type="text"
+              id="color"
+              placeholder="Enter car color"
+              value={newCar.color}
+              onChange={(e) => setNewCar({ ...newCar, color: e.target.value })}
+            />
+          </div>
+          <div>
+            <label htmlFor="fuel">Fuel Type</label>
+            <input
+              type="text"
+              id="fuel"
+              placeholder="Enter fuel type"
+              value={newCar.fuel}
+              onChange={(e) => setNewCar({ ...newCar, fuel: e.target.value })}
+            />
+          </div>
+          <div>
+            <label htmlFor="manufacturer">Manufacturer</label>
+            <input
+              type="text"
+              id="manufacturer"
+              placeholder="Enter manufacturer"
+              value={newCar.manufacturer}
+              onChange={(e) => setNewCar({ ...newCar, manufacturer: e.target.value })}
+            />
+          </div>
+          <div>
+            <label htmlFor="mass">Mass (kg)</label>
+            <input
+              type="number"
+              id="mass"
+              placeholder="Enter mass in kg"
+              value={newCar.mass}
+              onChange={(e) => setNewCar({ ...newCar, mass: +e.target.value })}
+            />
+          </div>
+          <div>
+            <label htmlFor="imageUrl">Image URL</label>
+            <input
+              type="text"
+              id="imageUrl"
+              placeholder="Enter image URL"
+              value={newCar.imageUrl}
+              onChange={(e) => setNewCar({ ...newCar, imageUrl: e.target.value })}
+            />
+          </div>
+          <div>
+            <label htmlFor="price">Price</label>
+            <input
+              type="number"
+              id="price"
+              placeholder="Enter price"
+              value={newCar.price}
+              onChange={(e) => setNewCar({ ...newCar, price: +e.target.value })}
+            />
+          </div>
+          <div>
+            <label htmlFor="description">Description</label>
+            <textarea
+              id="description"
+              placeholder="Enter description"
+              value={newCar.description}
+              onChange={(e) => setNewCar({ ...newCar, description: e.target.value })}
+            />
+          </div>
+          <div>
+            <label htmlFor="yearMade">Year Made</label>
+            <input
+              type="number"
+              id="yearMade"
+              value={newCar.yearMade}
+              onChange={(e) => setNewCar({ ...newCar, yearMade: +e.target.value })}
+            />
+          </div>
+          <div>
+            <label htmlFor="horsePower">Horse Power</label>
+            <input
+              type="number"
+              id="horsePower"
+              value={newCar.horsePower}
+              onChange={(e) => setNewCar({ ...newCar, horsePower: +e.target.value })}
+            />
+          </div>
+          <button onClick={addCar} disabled={isSubmitting}>
+            {isSubmitting ? "Adding..." : "Add Car"}
+          </button>
+        </div>
+      </div>
 
       {/* Car List */}
       <h3>Cars in Catalog</h3>
-      <Row>
+      <div>
         {cars.map((car) => (
-          <Col key={car.id} sm={12} md={6} lg={4} xl={3}>
-            <Card className="mb-4 shadow-sm">
-              {car.imageUrl && <Card.Img variant="top" src={car.imageUrl} />}
-              <Card.Body>
-                <Card.Title>{car.vehicle}</Card.Title>
-                <Card.Text>{car.color} - {car.price}$ - {car.yearMade}</Card.Text>
-                <div className="d-flex justify-content-between">
-                  <Button variant="danger" onClick={() => deleteCar(car.id)}>
-                    <FaTrashAlt /> Delete Car
-                  </Button>
-                  <Button
-                    variant="info"
-                    onClick={() => toggleComments(car.id)}
-                    aria-expanded={openComments[car.id]}
-                  >
-                    <FaComments /> Comments ({(comments[car.id] || []).length})
-                  </Button>
-                </div>
+          <div key={car.id}>
+            {car.imageUrl && <img src={car.imageUrl} alt={car.vehicle} />}
+            <div>
+              <h4>{car.vehicle}</h4>
+              <p>{car.color} - {car.price}$ - {car.yearMade}</p>
+              <div>
+                <button onClick={() => deleteCar(car.id)}>
+                  Delete Car
+                </button>
+                <button onClick={() => toggleComments(car.id)}>
+                  Comments ({(comments[car.id] || []).length})
+                </button>
+              </div>
 
-                {/* Comments Section */}
-                <Collapse in={openComments[car.id]}>
-                  <div className="mt-3">
-                    <ListGroup>
-                      {(comments[car.id] || []).length > 0 ? (
-                        comments[car.id].map((comment) => (
-                          <ListGroup.Item
-                            key={comment.id}
-                            className="d-flex justify-content-between align-items-center"
-                          >
-                            {comment.text}
-                            <Button
-                              variant="outline-danger"
-                              size="sm"
-                              onClick={() => deleteComment(car.id, comment.id)}
-                            >
-                              <FaTrashAlt />
-                            </Button>
-                          </ListGroup.Item>
-                        ))
-                      ) : (
-                        <ListGroup.Item>No comments yet.</ListGroup.Item>
-                      )}
-                    </ListGroup>
-                  </div>
-                </Collapse>
-              </Card.Body>
-            </Card>
-          </Col>
+              {/* Comments Section */}
+              {openComments[car.id] && (
+                <div>
+                  {(comments[car.id] || []).length > 0 ? (
+                    comments[car.id].map((comment) => (
+                      <div key={comment.id}>
+                        {comment.text}
+                        <button onClick={() => deleteComment(car.id, comment.id)}>
+                          Delete
+                        </button>
+                      </div>
+                    ))
+                  ) : (
+                    <p>No comments yet.</p>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
         ))}
-      </Row>
-    </Container>
+      </div>
+    </div>
   );
 };
 

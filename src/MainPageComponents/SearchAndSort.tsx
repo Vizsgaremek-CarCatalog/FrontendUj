@@ -8,7 +8,6 @@ interface SearchAndSortProps {
   setSortKey: (value: keyof Car | "") => void;
   sortOrder: string;
   setSortOrder: (value: string) => void;
-  theme: string; // Add theme prop
 }
 
 const SearchAndSort: React.FC<SearchAndSortProps> = ({
@@ -18,18 +17,15 @@ const SearchAndSort: React.FC<SearchAndSortProps> = ({
   setSortKey,
   sortOrder,
   setSortOrder,
-  theme,
 }) => (
-  <div className={`mb-3 d-flex justify-content-between search-sort ${theme}`}>
+  <div>
     <input
       type="text"
-      className="form-control w-50 custom-input"
       placeholder="Search by vehicle name..."
       value={search}
       onChange={(e) => setSearch(e.target.value)}
     />
     <select
-      className="form-select w-25 custom-input"
       value={sortKey}
       onChange={(e) => setSortKey(e.target.value as keyof Car)}
     >
@@ -39,10 +35,7 @@ const SearchAndSort: React.FC<SearchAndSortProps> = ({
       <option value="horsePower">Horse Power</option>
       <option value="vehicle">Name</option>
     </select>
-    <button
-      className="btn btn-primary custom-btn"
-      onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
-    >
+    <button onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}>
       {sortOrder === "asc" ? "⬆ Ascending" : "⬇ Descending"}
     </button>
   </div>

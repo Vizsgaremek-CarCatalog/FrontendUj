@@ -6,14 +6,12 @@ interface CarDetailsProps {
   car: Car;
   carComments: { [key: number]: string[] };
   setCarComments: React.Dispatch<React.SetStateAction<{ [key: number]: string[] }>>;
-  theme: string;
 }
 
-const CarDetails: React.FC<CarDetailsProps> = ({ car, carComments, setCarComments, theme }) => {
+const CarDetails: React.FC<CarDetailsProps> = ({ car, carComments, setCarComments }) => {
   const [newComment, setNewComment] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch comments on mount
   useEffect(() => {
     const fetchComments = async () => {
       try {
@@ -66,7 +64,7 @@ const CarDetails: React.FC<CarDetailsProps> = ({ car, carComments, setCarComment
   };
 
   return (
-    <div className={`card-body car-details ${theme}`}>
+    <div>
       <p><strong>Manufacturer:</strong> {car.manufacturer}</p>
       <p><strong>Type:</strong> {car.type}</p>
       <p><strong>Price:</strong> ${car.price}</p>
@@ -77,24 +75,22 @@ const CarDetails: React.FC<CarDetailsProps> = ({ car, carComments, setCarComment
       <p><strong>Year:</strong> {car.yearMade}</p>
       <p><strong>Description:</strong> {car.description}</p>
 
-      <div className="comments-section mt-4">
+      <div>
         <h5>Comments:</h5>
-        {error && <div className="alert alert-danger">{error}</div>}
+        {error && <div>{error}</div>}
         {carComments[car.id]?.length > 0 ? (
           carComments[car.id].map((comment, index) => (
-            <p key={index} className="mb-2">{comment}</p>
+            <p key={index}>{comment}</p>
           ))
         ) : (
           <p>No comments yet.</p>
         )}
         <textarea
-          className="form-control custom-input"
           placeholder="Add a comment..."
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
         />
         <button
-          className="btn btn-primary mt-2 custom-btn"
           onClick={handleAddComment}
           disabled={!newComment.trim()}
         >

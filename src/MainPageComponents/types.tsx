@@ -11,5 +11,4 @@ export interface Car {
   description: string;
   yearMade: number;
   horsePower: number;
-  }
-  
+}

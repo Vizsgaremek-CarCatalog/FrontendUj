@@ -8,11 +8,11 @@ import Register from "./Register";
 import CarList from "./CarList";
 import AdminDashboard from "./AdminDashboard";
 import Navbar from "./Navbar";
+import Home from "./components/home";
 
 const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(!!localStorage.getItem("authToken"));
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
-  const [theme, setTheme] = useState<string>("red-black");
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
@@ -32,25 +32,24 @@ const App: React.FC = () => {
     setIsAdmin(false);
   };
 
-  const toggleTheme = () => {
-    setTheme(prevTheme => (prevTheme === "red-black" ? "miami-vice" : "red-black"));
-  };
 
   return (
     <Router>
-      <div className={`min-vh-100 ${theme}`}>
+      <div className={`min-vh-100`}>
         <Navbar
           isLoggedIn={isLoggedIn}
           isAdmin={isAdmin}
-          theme={theme}
+       
           onLogout={handleLogout}
-          onToggleTheme={toggleTheme}
+         
         />
         <div className="container mt-5">
           <Routes>
-            <Route path="/login" element={<Login onLogin={handleLogin} theme={theme} />} />
-            <Route path="/register" element={<Register theme={theme} />} />
-            <Route path="/cars" element={isLoggedIn ? <CarList theme={theme} /> : <Navigate to="/login" />} />    
+          <Route path="/" element={<Home />} />
+
+            <Route path="/login" element={<Login onLogin={handleLogin}/>} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/cars" element={isLoggedIn ? <CarList /> : <Navigate to="/login" />} />    
               <Route path="/admin" element={<AdminDashboard />} />
             <Route path="*" element={<Navigate to={isLoggedIn ? "/cars" : "/login"} />} />
           </Routes>

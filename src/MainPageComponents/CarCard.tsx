@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Car } from "./types";
 import CarDetails from "./CarDetails";
 
@@ -24,26 +24,21 @@ const CarCard: React.FC<CarCardProps> = ({
   };
 
   return (
-    <div className="col">
-      <div className="card shadow-sm border-0 rounded-3">
+    <div>
+      <div>
         <img
           src={car.imageUrl || "https://via.placeholder.com/400x250?text=Car+Image"}
-          className="car-img"
           alt={car.vehicle}
           onClick={() => setSelectedCar(selectedCar === car.id ? null : car.id)}
         />
-        <div className="card-body text-center">
+        <div>
           <h5
-            className="card-title fw-bold text-primary"
             onClick={() => setSelectedCar(selectedCar === car.id ? null : car.id)}
             style={{ cursor: "pointer" }}
           >
             {car.vehicle}
           </h5>
-          <button
-            className="btn btn-primary"
-            onClick={handleComparisonClick}
-          >
+          <button onClick={handleComparisonClick}>
             Compare
           </button>
         </div>

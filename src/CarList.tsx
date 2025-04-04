@@ -7,9 +7,7 @@ import CheckboxFilters from "./MainPageComponents/CheckBoxFilters";
 import CarCard from "./MainPageComponents/CarCard";
 import ComparisonModal from "./MainPageComponents/ComparisonModal";
 
-interface CarListProps {
-  theme: string;
-}
+
 
 interface CheckboxFiltersState {
   manufacturers: string[];
@@ -20,7 +18,7 @@ interface CheckboxFiltersState {
   yearOptions: string[];
 }
 
-const CarList: React.FC<CarListProps> = ({ theme }) => {
+const CarList: React.FC = () => {
   const [cars, setCars] = useState<Car[]>([]);
   const [filteredCars, setFilteredCars] = useState<Car[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -64,14 +62,13 @@ const CarList: React.FC<CarListProps> = ({ theme }) => {
     };
     fetchData();
   }, []);
+
   useEffect(() => {
-    let updatedCars = cars.filter((car) => {
-      // Base filters (search, price, horsepower)
+    const updatedCars = cars.filter((car) => {
       const matchesSearch = car.vehicle.toLowerCase().includes(search.toLowerCase());
       const matchesPrice = car.price >= priceRange[0] && car.price <= priceRange[1];
       const matchesHorsePower = car.horsePower >= horsePowerRange[0] && car.horsePower <= horsePowerRange[1];
 
-      // Checkbox filters: only apply if the category has selections, otherwise pass all
       const matchesManufacturers =
         checkboxFilters.manufacturers.length === 0 || checkboxFilters.manufacturers.includes(car.manufacturer);
       const matchesTypes = checkboxFilters.types.length === 0 || checkboxFilters.types.includes(car.type);
@@ -98,7 +95,6 @@ const CarList: React.FC<CarListProps> = ({ theme }) => {
           return false;
         });
 
-      // Combine all conditions
       return (
         matchesSearch &&
         matchesPrice &&
@@ -119,13 +115,13 @@ const CarList: React.FC<CarListProps> = ({ theme }) => {
     }
 
     setFilteredCars(updatedCars);
-    console.log("Filtered Cars:", updatedCars); // Debug log
+    console.log("Filtered Cars:", updatedCars);
   }, [search, sortKey, sortOrder, priceRange, horsePowerRange, checkboxFilters, cars]);
 
   return (
-    <div className={`car-list ${theme}`}>
-      <h1 className="text-center mb-4">Verdák</h1>
-      {error && <p className="text-danger text-center">{error}</p>}
+    <div>
+      <h1>Verdák</h1>
+      {error && <p>{error}</p>}
 
       <SearchAndSort
         search={search}
@@ -134,18 +130,16 @@ const CarList: React.FC<CarListProps> = ({ theme }) => {
         setSortKey={setSortKey}
         sortOrder={sortOrder}
         setSortOrder={setSortOrder}
-        theme={theme}
       />
       <Filters
         priceRange={priceRange}
         setPriceRange={setPriceRange}
         horsePowerRange={horsePowerRange}
         setHorsePowerRange={setHorsePowerRange}
-        theme={theme}
       />
-      <CheckboxFilters onFilterChange={setCheckboxFilters} theme={theme} />
+      <CheckboxFilters onFilterChange={setCheckboxFilters} />
 
-      <div className="row row-cols-1 row-cols-md-4 g-4">
+      <div>
         {filteredCars.length > 0 ? (
           filteredCars.map((car) => (
             <CarCard
@@ -159,7 +153,7 @@ const CarList: React.FC<CarListProps> = ({ theme }) => {
             />
           ))
         ) : (
-          <p className="text-center">No cars match your filters.</p>
+          <p>No cars match your filters.</p>
         )}
       </div>
 

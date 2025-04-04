@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import axios from "./services/axiosConfig";
 import { useNavigate } from "react-router-dom";
-import { Form, Button, Alert, Spinner } from "react-bootstrap";
 
-interface RegisterProps {
-  theme: string;
-}
 
-const Register: React.FC<RegisterProps> = ({ theme }) => {
+
+const Register: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -52,74 +49,64 @@ const Register: React.FC<RegisterProps> = ({ theme }) => {
   };
 
   return (
-    <div className={`min-vh-100 d-flex justify-content-center align-items-center ${theme}`}>
-      <div className={`card shadow-lg p-4 register-card ${theme}`}>
-        <h2 className="text-center mb-4">Register</h2>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control
+    <div>
+      <div>
+        <h2>Register</h2>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>Email address</label>
+            <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="custom-input"
             />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
+          </div>
+          <div>
+            <label>Password</label>
+            <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="custom-input"
             />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Confirm Password</Form.Label>
-            <Form.Control
+          </div>
+          <div>
+            <label>Confirm Password</label>
+            <input
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
-              className="custom-input"
             />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Role</Form.Label>
-            <Form.Select
+          </div>
+          <div>
+            <label>Role</label>
+            <select
               value={role}
               onChange={(e) => setRole(e.target.value)}
               required
-              className="custom-input"
             >
               <option value="USER">User</option>
               <option value="ADMIN">Admin</option>
-            </Form.Select>
-          </Form.Group>
+            </select>
+          </div>
           {role === "ADMIN" && (
-            <Form.Group className="mb-3">
-              <Form.Label>Admin Password</Form.Label>
-              <Form.Control
+            <div>
+              <label>Admin Password</label>
+              <input
                 type="password"
                 value={adminPassword}
                 onChange={(e) => setAdminPassword(e.target.value)}
                 required
-                className="custom-input"
               />
-            </Form.Group>
+            </div>
           )}
-          {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-          <Button
-            variant="primary"
-            type="submit"
-            disabled={loading}
-            className="w-100 custom-btn"
-          >
-            {loading ? <Spinner animation="border" size="sm" /> : "Register"}
-          </Button>
-        </Form>
+          {errorMessage && <div>{errorMessage}</div>}
+          <button type="submit" disabled={loading}>
+            {loading ? "Loading..." : "Register"}
+          </button>
+        </form>
       </div>
     </div>
   );
