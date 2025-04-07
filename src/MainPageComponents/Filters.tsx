@@ -15,28 +15,54 @@ const Filters: React.FC<FiltersProps> = ({
   horsePowerRange,
   setHorsePowerRange,
 }) => (
-  <>
-    <div>
-      <h5>Price Range: ${priceRange[0]} - ${priceRange[1]}</h5>
-      <Slider
-        range
-        min={0}
-        max={100000}
-        defaultValue={priceRange}
-        onChange={(value) => setPriceRange(value as [number, number])}
-      />
+  <div className="p-6 bg-white rounded-lg shadow-lg">
+    <div className="mb-6">
+      <h5 className="text-lg font-semibold text-gray-800 mb-3">
+        Price Range: ${priceRange[0].toLocaleString()} - ${priceRange[1].toLocaleString()}
+      </h5>
+      <div className="px-2">
+        <Slider
+          range
+          min={0}
+          max={100000}
+          defaultValue={priceRange}
+          onChange={(value) => setPriceRange(value as [number, number])}
+          trackStyle={{ backgroundColor: '#3b82f6', height: 6 }}
+          handleStyle={{
+            borderColor: '#3b82f6',
+            height: 16,
+            width: 16,
+            marginTop: -5,
+            backgroundColor: '#ffffff',
+          }}
+          railStyle={{ backgroundColor: '#e5e7eb', height: 6 }}
+        />
+      </div>
     </div>
     <div>
-      <h5>Horse Power Range: {horsePowerRange[0]} - {horsePowerRange[1]} HP</h5>
-      <Slider
-        range
-        min={0}
-        max={1000}
-        defaultValue={horsePowerRange}
-        onChange={(value) => setHorsePowerRange(value as [number, number])}
-      />
+      <h5 className="text-lg font-semibold text-gray-800 mb-3">
+        Horsepower Range: {horsePowerRange[0]} - {horsePowerRange[1]} HP
+      </h5>
+      <div className="px-2">
+        <Slider
+          range
+          min={0}
+          max={1500}
+          defaultValue={horsePowerRange}
+          onChange={(value) => setHorsePowerRange(value as [number, number])}
+          trackStyle={{ backgroundColor: '#3b82f6', height: 6 }}
+          handleStyle={{
+            borderColor: '#3b82f6',
+            height: 16,
+            width: 16,
+            marginTop: -5,
+            backgroundColor: '#ffffff',
+          }}
+          railStyle={{ backgroundColor: '#e5e7eb', height: 6 }}
+        />
+      </div>
     </div>
-  </>
+  </div>
 );
 
 export default Filters;

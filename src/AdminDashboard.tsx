@@ -94,6 +94,7 @@ const AdminDashboard: React.FC = () => {
       });
     } catch (error) {
       console.error("Error adding car", error);
+      setError("Failed to add car.");
     } finally {
       setIsSubmitting(false);
     }
@@ -110,6 +111,7 @@ const AdminDashboard: React.FC = () => {
       });
     } catch (error) {
       console.error("Error deleting car", error);
+      setError("Failed to delete car.");
     }
   };
 
@@ -144,159 +146,195 @@ const AdminDashboard: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1>Admin Dashboard</h1>
+    <div className="p-6">
+      <h1 className="text-3xl font-bold text-gray-800 mb-6">Admin Dashboard</h1>
 
       {/* Add Car Form */}
-      <div>
-        <h3>Add New Car</h3>
-        {error && <div>{error}</div>}
-        <div>
+      <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h3 className="text-xl font-semibold text-gray-800 mb-4">Add New Car</h3>
+        {error && <div className="text-red-500 mb-4">{error}</div>}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="vehicle">Vehicle Name</label>
+            <label htmlFor="vehicle" className="block text-gray-700 font-medium mb-2">Vehicle Name</label>
             <input
               type="text"
               id="vehicle"
               placeholder="Enter vehicle name"
               value={newCar.vehicle}
               onChange={(e) => setNewCar({ ...newCar, vehicle: e.target.value })}
+              className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
             />
           </div>
           <div>
-            <label htmlFor="type">Car Type</label>
+            <label htmlFor="type" className="block text-gray-700 font-medium mb-2">Car Type</label>
             <input
               type="text"
               id="type"
               placeholder="Enter car type"
               value={newCar.type}
               onChange={(e) => setNewCar({ ...newCar, type: e.target.value })}
+              className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
             />
           </div>
           <div>
-            <label htmlFor="color">Car Color</label>
+            <label htmlFor="color" className="block text-gray-700 font-medium mb-2">Car Color</label>
             <input
               type="text"
               id="color"
               placeholder="Enter car color"
               value={newCar.color}
               onChange={(e) => setNewCar({ ...newCar, color: e.target.value })}
+              className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
             />
           </div>
           <div>
-            <label htmlFor="fuel">Fuel Type</label>
+            <label htmlFor="fuel" className="block text-gray-700 font-medium mb-2">Fuel Type</label>
             <input
               type="text"
               id="fuel"
               placeholder="Enter fuel type"
               value={newCar.fuel}
               onChange={(e) => setNewCar({ ...newCar, fuel: e.target.value })}
+              className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
             />
           </div>
           <div>
-            <label htmlFor="manufacturer">Manufacturer</label>
+            <label htmlFor="manufacturer" className="block text-gray-700 font-medium mb-2">Manufacturer</label>
             <input
               type="text"
               id="manufacturer"
               placeholder="Enter manufacturer"
               value={newCar.manufacturer}
               onChange={(e) => setNewCar({ ...newCar, manufacturer: e.target.value })}
+              className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
             />
           </div>
           <div>
-            <label htmlFor="mass">Mass (kg)</label>
+            <label htmlFor="mass" className="block text-gray-700 font-medium mb-2">Mass (kg)</label>
             <input
               type="number"
               id="mass"
               placeholder="Enter mass in kg"
               value={newCar.mass}
               onChange={(e) => setNewCar({ ...newCar, mass: +e.target.value })}
+              className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
             />
           </div>
           <div>
-            <label htmlFor="imageUrl">Image URL</label>
+            <label htmlFor="imageUrl" className="block text-gray-700 font-medium mb-2">Image URL</label>
             <input
               type="text"
               id="imageUrl"
               placeholder="Enter image URL"
               value={newCar.imageUrl}
               onChange={(e) => setNewCar({ ...newCar, imageUrl: e.target.value })}
+              className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
             />
           </div>
           <div>
-            <label htmlFor="price">Price</label>
+            <label htmlFor="price" className="block text-gray-700 font-medium mb-2">Price</label>
             <input
               type="number"
               id="price"
               placeholder="Enter price"
               value={newCar.price}
               onChange={(e) => setNewCar({ ...newCar, price: +e.target.value })}
+              className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
             />
           </div>
-          <div>
-            <label htmlFor="description">Description</label>
+          <div className="md:col-span-2">
+            <label htmlFor="description" className="block text-gray-700 font-medium mb-2">Description</label>
             <textarea
               id="description"
               placeholder="Enter description"
               value={newCar.description}
               onChange={(e) => setNewCar({ ...newCar, description: e.target.value })}
+              className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 resize-y"
             />
           </div>
           <div>
-            <label htmlFor="yearMade">Year Made</label>
+            <label htmlFor="yearMade" className="block text-gray-700 font-medium mb-2">Year Made</label>
             <input
               type="number"
               id="yearMade"
               value={newCar.yearMade}
               onChange={(e) => setNewCar({ ...newCar, yearMade: +e.target.value })}
+              className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
             />
           </div>
           <div>
-            <label htmlFor="horsePower">Horse Power</label>
+            <label htmlFor="horsePower" className="block text-gray-700 font-medium mb-2">Horsepower</label>
             <input
               type="number"
               id="horsePower"
               value={newCar.horsePower}
               onChange={(e) => setNewCar({ ...newCar, horsePower: +e.target.value })}
+              className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
             />
           </div>
-          <button onClick={addCar} disabled={isSubmitting}>
-            {isSubmitting ? "Adding..." : "Add Car"}
-          </button>
+          <div className="md:col-span-2">
+            <button
+              onClick={addCar}
+              disabled={isSubmitting}
+              className={`w-full px-4 py-3 rounded-lg text-white transition-colors duration-200 ${
+                isSubmitting ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
+              }`}
+            >
+              {isSubmitting ? "Adding..." : "Add Car"}
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Car List */}
-      <h3>Cars in Catalog</h3>
-      <div>
+      <h3 className="text-xl font-semibold text-gray-800 mb-4">Cars in Catalog</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {cars.map((car) => (
-          <div key={car.id}>
-            {car.imageUrl && <img src={car.imageUrl} alt={car.vehicle} />}
-            <div>
-              <h4>{car.vehicle}</h4>
-              <p>{car.color} - {car.price}$ - {car.yearMade}</p>
-              <div>
-                <button onClick={() => deleteCar(car.id)}>
+          <div key={car.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
+            {car.imageUrl && (
+              <img
+                src={car.imageUrl}
+                alt={car.vehicle}
+                className="w-full h-48 object-cover rounded-t-lg"
+              />
+            )}
+            <div className="p-4">
+              <h4 className="text-lg font-semibold text-gray-800 mb-2">{car.vehicle}</h4>
+              <p className="text-gray-600 mb-4">
+                {car.color} - ${car.price.toLocaleString()} - {car.yearMade}
+              </p>
+              <div className="flex flex-col gap-2">
+                <button
+                  onClick={() => deleteCar(car.id)}
+                  className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-200"
+                >
                   Delete Car
                 </button>
-                <button onClick={() => toggleComments(car.id)}>
+                <button
+                  onClick={() => toggleComments(car.id)}
+                  className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200"
+                >
                   Comments ({(comments[car.id] || []).length})
                 </button>
               </div>
 
               {/* Comments Section */}
               {openComments[car.id] && (
-                <div>
+                <div className="mt-4 bg-gray-50 p-4 rounded-lg">
                   {(comments[car.id] || []).length > 0 ? (
                     comments[car.id].map((comment) => (
-                      <div key={comment.id}>
-                        {comment.text}
-                        <button onClick={() => deleteComment(car.id, comment.id)}>
+                      <div key={comment.id} className="flex justify-between items-center mb-2">
+                        <p className="text-gray-600">{comment.text}</p>
+                        <button
+                          onClick={() => deleteComment(car.id, comment.id)}
+                          className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors duration-200"
+                        >
                           Delete
                         </button>
                       </div>
                     ))
                   ) : (
-                    <p>No comments yet.</p>
+                    <p className="text-gray-600">No comments yet.</p>
                   )}
                 </div>
               )}

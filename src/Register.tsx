@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import axios from "./services/axiosConfig";
 import { useNavigate } from "react-router-dom";
 
-
-
 const Register: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,78 +34,83 @@ const Register: React.FC = () => {
       await axios.post("http://localhost:3000/users/", userData);
       alert("Registration successful! Please log in.");
       navigate("/login");
-    } catch (error: unknown) {
+    } catch (error: any) {
       console.error("Registration failed", error);
-      if (axios.isAxiosError(error) && error.response?.data?.message) {
-        setErrorMessage(error.response.data.message);
-      } else {
-        setErrorMessage("Registration failed");
-      }
+      setErrorMessage(error.response?.data?.message || "Registration failed");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div>
-      <div>
-        <h2>Register</h2>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>Email address</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label>Password</label>
+    <div className="p-6 bg-white rounded-lg shadow-lg max-w-md mx-auto">
+      <h2 className="text-2xl font-bold text-gray-800 mb-6">Register</h2>
+      {errorMessage && <div className="text-red-500 mb-4">{errorMessage}</div>}
+      <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <label className="block text-gray-700 font-medium mb-2">Email address</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 font-medium mb-2">Password</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 font-medium mb-2">Confirm Password</label>
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+            className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 font-medium mb-2">Role</label>
+          <select
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            required
+            className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
+          >
+            <option value="USER">User</option>
+            <option value="ADMIN">Admin</option>
+          </select>
+        </div>
+        {role === "ADMIN" && (
+          <div className="mb-4">
+            <label className="block text-gray-700 font-medium mb-2">Admin Password</label>
             <input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={adminPassword}
+              onChange={(e) => setAdminPassword(e.target.value)}
               required
+              className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
             />
           </div>
-          <div>
-            <label>Confirm Password</label>
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label>Role</label>
-            <select
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              required
-            >
-              <option value="USER">User</option>
-              <option value="ADMIN">Admin</option>
-            </select>
-          </div>
-          {role === "ADMIN" && (
-            <div>
-              <label>Admin Password</label>
-              <input
-                type="password"
-                value={adminPassword}
-                onChange={(e) => setAdminPassword(e.target.value)}
-                required
-              />
-            </div>
-          )}
-          {errorMessage && <div>{errorMessage}</div>}
-          <button type="submit" disabled={loading}>
-            {loading ? "Loading..." : "Register"}
-          </button>
-        </form>
-      </div>
+        )}
+        <button
+          type="submit"
+          disabled={loading}
+          className={`w-full px-4 py-3 rounded-lg text-white transition-colors duration-200 ${
+            loading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
+          }`}
+        >
+          {loading ? "Loading..." : "Register"}
+        </button>
+      </form>
     </div>
   );
 };

@@ -1,6 +1,5 @@
 import React from "react";
 import { Car } from "./types";
-import "../..//src/Style/ComparisonModal.css";
 
 interface ComparisonModalProps {
   selectedCars: Car[];
@@ -11,38 +10,72 @@ const ComparisonModal: React.FC<ComparisonModalProps> = ({ selectedCars, onClose
   if (selectedCars.length !== 2) return null;
 
   return (
-    <div className="modal fade show d-block comparison-modal" style={{ display: 'block' }} tabIndex={-1} role="dialog">
-      <div className="modal-dialog modal-lg" role="document">
-        <div className="modal-content comparison-modal-content">
-          <div className="modal-header comparison-modal-header">
-            <h5 className="modal-title comparison-modal-title">Compare Cars</h5>
-            <button type="button" className="btn-close comparison-btn-close" onClick={onClose}></button>
-          </div>
-          <div className="modal-body comparison-modal-body">
-            <div className="d-flex justify-content-between">
-              {selectedCars.map((car) => (
-                <div key={car.id} className="card comparison-card">
-                  <img
-                    src={car.imageUrl || "https://via.placeholder.com/400x250?text=Car+Image"}
-                    alt={car.vehicle}
-                    className="card-img-top comparison-card-img"
-                  />
-                  <div className="card-body comparison-card-body">
-                    <h5 className="card-title comparison-card-title">{car.vehicle}</h5>
-                    <p><strong>Price:</strong> ${car.price}</p>
-                    <p><strong>Horse Power:</strong> {car.horsePower}</p>
-                    <p><strong>Fuel:</strong> {car.fuel}</p>
-                    <p><strong>Year:</strong> {car.yearMade}</p>
-                  </div>
+    <div 
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      role="dialog"
+    >
+      <div className="bg-white rounded-lg shadow-lg w-full max-w-4xl mx-4">
+        {/* Header */}
+        <div className="p-6 border-b border-gray-200 flex justify-between items-center">
+          <h5 className="text-xl font-bold text-gray-800">Compare Cars</h5>
+          <button 
+            onClick={onClose}
+            className="text-gray-600 hover:text-gray-800 transition-colors duration-200"
+          >
+            <span className="text-2xl">&times;</span>
+          </button>
+        </div>
+
+        {/* Body */}
+        <div className="p-6">
+          <div className="flex flex-col md:flex-row justify-between gap-6">
+            {selectedCars.map((car) => (
+              <div 
+                key={car.id} 
+                className="flex-1 bg-white rounded-lg shadow-md overflow-hidden"
+              >
+                <img
+                  src={car.imageUrl || "https://via.placeholder.com/400x250?text=Car+Image"}
+                  alt={car.vehicle}
+                  className="w-full h-auto rounded-t-lg"
+                />
+                <div className="p-4">
+                  <h5 className="text-lg font-semibold text-gray-800 mb-4">{car.vehicle}</h5>
+                  <table className="table-auto w-full text-left border-collapse">
+                    <tbody>
+                      <tr className="border-b">
+                        <th className="py-2 px-4 font-medium text-gray-700 bg-gray-100">Price</th>
+                        <td className="py-2 px-4">${car.price.toLocaleString()}</td>
+                      </tr>
+                      <tr className="border-b">
+                        <th className="py-2 px-4 font-medium text-gray-700 bg-gray-100">Horsepower</th>
+                        <td className="py-2 px-4">{car.horsePower} HP</td>
+                      </tr>
+                      <tr className="border-b">
+                        <th className="py-2 px-4 font-medium text-gray-700 bg-gray-100">Fuel</th>
+                        <td className="py-2 px-4">{car.fuel}</td>
+                      </tr>
+                      <tr className="border-b">
+                        <th className="py-2 px-4 font-medium text-gray-700 bg-gray-100">Year</th>
+                        <td className="py-2 px-4">{car.yearMade}</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
-          <div className="modal-footer comparison-modal-footer">
-            <button type="button" className="btn btn-secondary comparison-btn-secondary" onClick={onClose}>
-              Close
-            </button>
-          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="p-6 border-t border-gray-200 flex justify-end">
+          <button
+            type="button"
+            className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors duration-200"
+            onClick={onClose}
+          >
+            Close
+          </button>
         </div>
       </div>
     </div>
