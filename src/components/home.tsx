@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "../index.css"; 
-import Footer from "./footer";
 import RoutingService from "../services/RoutingService";
+import { useNavigate } from "react-router-dom";
+import "../index.css"
+import Footer from "./footer";
 
 export default function Home() {
     const [extendedImages, setExtendedImages] = useState<string[]>([]);
@@ -55,7 +55,7 @@ export default function Home() {
     }
 
     return (
-        <div className="flex flex-col min-h-screen bg-gray-900">
+        <div className="flex flex-col min-h-screen w-full bg-gray-900">
             {/* Main Content */}
             <div className="flex-grow">
                 {/* Film Strip Slideshow */}
@@ -64,7 +64,7 @@ export default function Home() {
                         {extendedImages.map((image, index) => (
                             <div
                                 key={index}
-                                className="flex-shrink-0 w-50 h-30 mx-2 bg-white border-4 border-white shadow-lg" // Adjust width and height here
+                                className="flex-shrink-0 w-28 h-20 mx-2 bg-white border-4 border-white shadow-lg"
                             >
                                 <img
                                     src={image}
@@ -78,7 +78,7 @@ export default function Home() {
                             {extendedImages.map((image, index) => (
                                 <div
                                     key={`duplicate-${index}`}
-                                    className="flex-shrink-0 w-50 h-30 mx-2 bg-white border-4 border-white shadow-lg"
+                                    className="flex-shrink-0 w-28 h-20 mx-2 bg-white border-4 border-white shadow-lg"
                                 >
                                     <img
                                         src={image}
@@ -158,14 +158,10 @@ export default function Home() {
                         <button
                             type="submit"
                             className="px-6 py-2 bg-blue-500 text-white rounded-r-lg hover:bg-blue-600 transition"
-                        >
-                            Subscribe
-                        </button>
+                        > Subscribe</button>
                     </form>
                 </div>
             </div>
-
-            {/* Footer */}
             <Footer />
         </div>
     );
