@@ -105,8 +105,8 @@ const CarList: React.FC<CarListProps> = ({ isLoggedIn }) => {
     });
 
   return (
-    <div className="flex justify-center min-h-screen">
-      <div className="p-6 w-full max-w-7xl"> {/* Centered container with max width */}
+    <div className="min-h-screen w-full bg-gray-100"> {/* Full width and height */}
+      <div className="p-6 w-full"> {/* Removed max-w-7xl */}
         <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Car Catalog</h1>
         <SearchAndSort
           search={search}
