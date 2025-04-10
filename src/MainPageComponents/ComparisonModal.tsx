@@ -43,6 +43,11 @@ const ComparisonModal: React.FC<ComparisonModalProps> = ({ selectedCars, onClose
                   <h5 className="text-lg font-semibold text-gray-800 mb-4">{car.vehicle}</h5>
                   <table className="table-auto w-full text-left border-collapse">
                     <tbody>
+
+                    <tr className="border-b">
+                        <th className="py-2 px-4 font-medium text-gray-700 bg-gray-100">Type</th>
+                        <td className="py-2 px-4">{car.type}</td>
+                      </tr>
                       <tr className="border-b">
                         <th className="py-2 px-4 font-medium text-gray-700 bg-gray-100">Price</th>
                         <td className="py-2 px-4">${car.price.toLocaleString()}</td>
@@ -55,6 +60,11 @@ const ComparisonModal: React.FC<ComparisonModalProps> = ({ selectedCars, onClose
                         <th className="py-2 px-4 font-medium text-gray-700 bg-gray-100">Fuel</th>
                         <td className="py-2 px-4">{car.fuel}</td>
                       </tr>
+                      <tr className="border-b">
+                        <th className="py-2 px-4 font-medium text-gray-700 bg-gray-100">Mass</th>
+                        <td className="py-2 px-4">{car.mass}</td>
+                      </tr>
+
                       <tr className="border-b">
                         <th className="py-2 px-4 font-medium text-gray-700 bg-gray-100">Year</th>
                         <td className="py-2 px-4">{car.yearMade}</td>

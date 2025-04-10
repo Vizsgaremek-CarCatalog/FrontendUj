@@ -20,14 +20,14 @@ const CarList: React.FC<CarListProps> = ({ isLoggedIn }) => {
   const [horsePowerRange, setHorsePowerRange] = useState<[number, number]>([0, 1000]);
   const [search, setSearch] = useState("");
   const [sortKey, setSortKey] = useState<keyof Car | "">("");
-  const [sortOrder, setSortOrder] = useState("asc");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [filters, setFilters] = useState({
-    manufacturers: [],
-    types: [],
-    colors: [],
-    fuels: [],
-    massOptions: [],
-    yearOptions: [],
+    manufacturers: [] as string[],
+    types: [] as string[],
+    colors: [] as string[],
+    fuels: [] as string[],
+    massOptions: [] as string[],
+    yearOptions: [] as string[],
   });
 
   useEffect(() => {
@@ -68,7 +68,8 @@ const CarList: React.FC<CarListProps> = ({ isLoggedIn }) => {
       const matchesPrice = car.price >= priceRange[0] && car.price <= priceRange[1];
       const matchesHorsePower = car.horsePower >= horsePowerRange[0] && car.horsePower <= horsePowerRange[1];
       const matchesFilters =
-        (!filters.manufacturerssandlength || filters.manufacturers.includes(car.manufacturer)) &&
+        // Fixed typo: manufacturerssandlength -> manufacturers.length
+        (!filters.manufacturers.length || filters.manufacturers.includes(car.manufacturer)) &&
         (!filters.types.length || filters.types.includes(car.type)) &&
         (!filters.colors.length || filters.colors.includes(car.color)) &&
         (!filters.fuels.length || filters.fuels.includes(car.fuel)) &&
@@ -79,7 +80,7 @@ const CarList: React.FC<CarListProps> = ({ isLoggedIn }) => {
               : range.includes("<")
               ? [0, 1000]
               : range.split("-").map(Number);
-            return car.mass >= min && (max ? car.mass <= max : true);
+            return car.mass >= min && (max === Infinity || car.mass <= max);
           })) &&
         (!filters.yearOptions.length ||
           filters.yearOptions.some((range) => {
@@ -88,7 +89,7 @@ const CarList: React.FC<CarListProps> = ({ isLoggedIn }) => {
               : range.includes("<")
               ? [0, 2000]
               : range.split("-").map(Number);
-            return car.yearMade >= min && (max ? car.yearMade <= max : true);
+            return car.yearMade >= min && (max === Infinity || car.yearMade <= max);
           }));
       return matchesSearch && matchesPrice && matchesHorsePower && matchesFilters;
     })
@@ -105,8 +106,8 @@ const CarList: React.FC<CarListProps> = ({ isLoggedIn }) => {
     });
 
   return (
-    <div className="min-h-screen w-screen bg-gray-100 p-0 m-0"> {/* Full viewport width, no padding/margin */}
-      <div className="w-full p-6"> {/* Inner content with padding */}
+    <div className="min-h-screen w-screen bg-gray-100 p-0 m-0">
+      <div className="w-full p-6">
         <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Car Catalog</h1>
         <SearchAndSort
           search={search}
@@ -126,27 +127,31 @@ const CarList: React.FC<CarListProps> = ({ isLoggedIn }) => {
           />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full">
-          {filteredCars.map((car) => (
-            <div key={car.id} className="relative">
-              <CarCard
-                car={car}
-                selectedCar={selectedCar}
-                setSelectedCar={setSelectedCar}
-                setSelectedCarsForComparison={setSelectedCarsForComparison}
-                carComments={carComments}
-                setCarComments={setCarComments}
-                isLoggedIn={isLoggedIn}
-              />
-              {isLoggedIn && (
-                <button
-                  onClick={() => addToFavorites(car.id)}
-                  className="absolute top-2 right-2 px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200"
-                >
-                  Add to Favorites
-                </button>
-              )}
-            </div>
-          ))}
+          {filteredCars.length === 0 ? (
+            <p className="text-gray-600 text-center col-span-full">No cars match your filters.</p>
+          ) : (
+            filteredCars.map((car) => (
+              <div key={car.id} className="relative">
+                <CarCard
+                  car={car}
+                  selectedCar={selectedCar}
+                  setSelectedCar={setSelectedCar}
+                  setSelectedCarsForComparison={setSelectedCarsForComparison}
+                  carComments={carComments}
+                  setCarComments={setCarComments}
+                  isLoggedIn={isLoggedIn}
+                />
+                {isLoggedIn && (
+                  <button
+                    onClick={() => addToFavorites(car.id)}
+                    className="absolute top-2 right-2 px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200"
+                  >
+                    Add to Favorites
+                  </button>
+                )}
+              </div>
+            ))
+          )}
         </div>
         <ComparisonModal
           selectedCars={selectedCarsForComparison}

@@ -24,12 +24,38 @@ const CheckboxFilters: React.FC<CheckboxFiltersProps> = ({ onFilterChange }) => 
   });
   const [open, setOpen] = useState(false);
 
-  const manufacturers = ["Toyota", "Ford", "BMW", "Mercedes", "Honda"];
-  const types = ["Coupe", "Sedan", "SUV", "Truck", "Hatchback"];
-  const colors = ["Red", "Blue", "Black", "White", "Silver"];
-  const fuels = ["Gasoline", "Diesel", "Electric", "Hybrid"];
-  const massOptions = ["<1000 kg", "1000-2000 kg", "2000-3000 kg", ">3000 kg"];
-  const yearOptions = ["<2000", "2000-2010", "2010-2020", ">2020"];
+  const manufacturers = [
+    "Toyota", "Ford", "BMW", "Mercedes", "Honda",
+    "Jeep", "Porsche", "Audi", "Dodge", "Land Rover",
+    "Genesis", "Hyundai", "Lucid Motors", "Maserati",
+    "Volvo", "Kia", "Mercedes-Benz", "Chevrolet",
+    "Tesla", "Rivian", "Lotus", "Polestar", "Lamborghini",
+    "Ferrari", "Nissan", "Aston Martin", "Handmade"
+  ];
+  
+  const types = [
+    "Coupe", "Sedan", "SUV", "Truck", "Hatchback",
+    "Sports", "Chevrolet Corvette C6"
+  ];
+  
+  const colors = [
+    "Red", "Blue", "Black", "White", "Silver",
+    "Green", "Orange", "Yellow", "Gray", "Rosso Corsa",
+    "Dark Green"
+  ];
+  
+  const fuels = [
+    "Gasoline", "Diesel", "Electric", "Hybrid",
+    "Kachow"
+  ];
+  
+  const massOptions = [
+    "<1000 kg", "1000-2000 kg", "2000-3000 kg", ">3000 kg"
+  ];
+  
+  const yearOptions = [
+    "<2000", "2000-2010", "2010-2020", ">2020", "2025"
+  ];
 
   const handleCheckboxChange = (category: keyof CheckboxFiltersState, value: string) => {
     setFilters((prev) => {
@@ -38,7 +64,7 @@ const CheckboxFilters: React.FC<CheckboxFiltersProps> = ({ onFilterChange }) => 
         ? currentValues.filter((item) => item !== value)
         : [...currentValues, value];
       const newFilters = { ...prev, [category]: updatedValues };
-      onFilterChange(newFilters);
+      onFilterChange(newFilters); // Notify parent of filter change
       return newFilters;
     });
   };
