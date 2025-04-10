@@ -105,52 +105,54 @@ const CarList: React.FC<CarListProps> = ({ isLoggedIn }) => {
     });
 
   return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold text-gray-800 mb-6">Car Catalog</h1>
-      <SearchAndSort
-        search={search}
-        setSearch={setSearch}
-        sortKey={sortKey}
-        setSortKey={setSortKey}
-        sortOrder={sortOrder}
-        setSortOrder={setSortOrder}
-      />
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <CheckboxFilters onFilterChange={setFilters} />
-        <Filters
-          priceRange={priceRange}
-          setPriceRange={setPriceRange}
-          horsePowerRange={horsePowerRange}
-          setHorsePowerRange={setHorsePowerRange}
+    <div className="flex justify-center min-h-screen">
+      <div className="p-6 w-full max-w-7xl"> {/* Centered container with max width */}
+        <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Car Catalog</h1>
+        <SearchAndSort
+          search={search}
+          setSearch={setSearch}
+          sortKey={sortKey}
+          setSortKey={setSortKey}
+          sortOrder={sortOrder}
+          setSortOrder={setSortOrder}
+        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <CheckboxFilters onFilterChange={setFilters} />
+          <Filters
+            priceRange={priceRange}
+            setPriceRange={setPriceRange}
+            horsePowerRange={horsePowerRange}
+            setHorsePowerRange={setHorsePowerRange}
+          />
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {filteredCars.map((car) => (
+            <div key={car.id} className="relative">
+              <CarCard
+                car={car}
+                selectedCar={selectedCar}
+                setSelectedCar={setSelectedCar}
+                setSelectedCarsForComparison={setSelectedCarsForComparison}
+                carComments={carComments}
+                setCarComments={setCarComments}
+                isLoggedIn={isLoggedIn}
+              />
+              {isLoggedIn && (
+                <button
+                  onClick={() => addToFavorites(car.id)}
+                  className="absolute top-2 right-2 px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200"
+                >
+                  Add to Favorites
+                </button>
+              )}
+            </div>
+          ))}
+        </div>
+        <ComparisonModal
+          selectedCars={selectedCarsForComparison}
+          onClose={() => setSelectedCarsForComparison([])}
         />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredCars.map((car) => (
-          <div key={car.id} className="relative">
-            <CarCard
-              car={car}
-              selectedCar={selectedCar}
-              setSelectedCar={setSelectedCar}
-              setSelectedCarsForComparison={setSelectedCarsForComparison}
-              carComments={carComments}
-              setCarComments={setCarComments}
-              isLoggedIn={isLoggedIn} // Pass isLoggedIn to CarCard
-            />
-            {isLoggedIn && (
-              <button
-                onClick={() => addToFavorites(car.id)}
-                className="absolute top-2 right-2 px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200"
-              >
-                Add to Favorites
-              </button>
-            )}
-          </div>
-        ))}
-      </div>
-      <ComparisonModal
-        selectedCars={selectedCarsForComparison}
-        onClose={() => setSelectedCarsForComparison([])}
-      />
     </div>
   );
 };

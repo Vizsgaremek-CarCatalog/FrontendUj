@@ -21,3 +21,18 @@
     transform: translateY(10px);
     transition: opacity 300ms, transform 300ms;
 }
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    width: 100vw;
+    overflow-x: hidden; /* Prevents horizontal scroll from overflow */
+  }
