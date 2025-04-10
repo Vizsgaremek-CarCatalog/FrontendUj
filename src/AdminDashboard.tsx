@@ -190,12 +190,12 @@ const AdminDashboard: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen w-full bg-gray-100"> {/* Full width and height */}
-      <div className="p-6 w-full"> {/* Removed max-w-7xl */}
+    <div className="min-h-screen w-screen bg-gray-100 p-0 m-0"> {/* Full viewport width, no padding/margin */}
+      <div className="w-full p-6"> {/* Inner content with padding */}
         <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Admin Dashboard</h1>
 
         {/* Search Input */}
-        <div className="mb-6">
+        <div className="mb-6 w-full">
           <label htmlFor="search" className="block text-gray-700 font-medium mb-2">
             Search Cars
           </label>
@@ -210,10 +210,10 @@ const AdminDashboard: React.FC = () => {
         </div>
 
         {/* Add Car Form */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-8 w-full">
           <h3 className="text-xl font-semibold text-gray-800 mb-4">Add New Car</h3>
           {error && <div className="text-red-500 mb-4">{error}</div>}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
             <div>
               <label htmlFor="vehicle" className="block text-gray-700 font-medium mb-2">Vehicle Name</label>
               <input
@@ -347,7 +347,7 @@ const AdminDashboard: React.FC = () => {
 
         {/* Car List */}
         <h3 className="text-xl font-semibold text-gray-800 mb-4 text-center">Cars in Catalog</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full">
           {filteredCars.map((car) => (
             <div key={car.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
               {car.imageUrl && (

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "./services/axiosConfig";
 import CarCard from "./MainPageComponents/CarCard";
-import CheckboxFilters from "./MainPageComponents/CheckBoxFilters";
+import CheckboxFilters from "./MainPageComponents/CheckboxFilters";
 import Filters from "./MainPageComponents/Filters";
 import SearchAndSort from "./MainPageComponents/SearchAndSort";
 import ComparisonModal from "./MainPageComponents/ComparisonModal";
@@ -68,7 +68,7 @@ const CarList: React.FC<CarListProps> = ({ isLoggedIn }) => {
       const matchesPrice = car.price >= priceRange[0] && car.price <= priceRange[1];
       const matchesHorsePower = car.horsePower >= horsePowerRange[0] && car.horsePower <= horsePowerRange[1];
       const matchesFilters =
-        (!filters.manufacturers.length || filters.manufacturers.includes(car.manufacturer)) &&
+        (!filters.manufacturerssandlength || filters.manufacturers.includes(car.manufacturer)) &&
         (!filters.types.length || filters.types.includes(car.type)) &&
         (!filters.colors.length || filters.colors.includes(car.color)) &&
         (!filters.fuels.length || filters.fuels.includes(car.fuel)) &&
@@ -105,8 +105,8 @@ const CarList: React.FC<CarListProps> = ({ isLoggedIn }) => {
     });
 
   return (
-    <div className="min-h-screen w-full bg-gray-100"> {/* Full width and height */}
-      <div className="p-6 w-full"> {/* Removed max-w-7xl */}
+    <div className="min-h-screen w-screen bg-gray-100 p-0 m-0"> {/* Full viewport width, no padding/margin */}
+      <div className="w-full p-6"> {/* Inner content with padding */}
         <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Car Catalog</h1>
         <SearchAndSort
           search={search}
@@ -116,7 +116,7 @@ const CarList: React.FC<CarListProps> = ({ isLoggedIn }) => {
           sortOrder={sortOrder}
           setSortOrder={setSortOrder}
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 w-full">
           <CheckboxFilters onFilterChange={setFilters} />
           <Filters
             priceRange={priceRange}
@@ -125,7 +125,7 @@ const CarList: React.FC<CarListProps> = ({ isLoggedIn }) => {
             setHorsePowerRange={setHorsePowerRange}
           />
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full">
           {filteredCars.map((car) => (
             <div key={car.id} className="relative">
               <CarCard

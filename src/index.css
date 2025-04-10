@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 
+
 .fade-enter {
     opacity: 0;
     transform: translateY(10px);
@@ -22,17 +23,15 @@
     transition: opacity 300ms, transform 300ms;
 }
 
-* {
+/* index.css or App.css */
+html, body, #root {
+    width: 100vw;
+    height: 100vh;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    overflow-x: hidden; /* Prevents horizontal scrollbars */
   }
   
-  body {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
-    width: 100vw;
-    overflow-x: hidden; /* Prevents horizontal scroll from overflow */
+  * {
+    box-sizing: border-box;
   }

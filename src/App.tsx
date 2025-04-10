@@ -33,7 +33,7 @@ const App: React.FC = () => {
 
   return (
     <Router>
-      <div className="min-vh-100">
+      <div className="w-screen min-h-screen">
         <Navbar isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />
         <div className="container mt-5">
           <Routes>
