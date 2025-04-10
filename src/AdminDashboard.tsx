@@ -190,30 +190,17 @@ const AdminDashboard: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen w-screen bg-gray-100 p-0 m-0"> {/* Full viewport width, no padding/margin */}
-      <div className="w-full p-6"> {/* Inner content with padding */}
+    <div className="flex justify-center min-h-screen">
+      <div className="p-6 w-full max-w-7xl"> {/* Centered container with max width */}
         <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Admin Dashboard</h1>
 
-        {/* Search Input */}
-        <div className="mb-6 w-full">
-          <label htmlFor="search" className="block text-gray-700 font-medium mb-2">
-            Search Cars
-          </label>
-          <input
-            type="text"
-            id="search"
-            placeholder="Search by vehicle name..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
-          />
-        </div>
+       
 
         {/* Add Car Form */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-8 w-full">
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
           <h3 className="text-xl font-semibold text-gray-800 mb-4">Add New Car</h3>
           {error && <div className="text-red-500 mb-4">{error}</div>}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label htmlFor="vehicle" className="block text-gray-700 font-medium mb-2">Vehicle Name</label>
               <input
@@ -345,9 +332,26 @@ const AdminDashboard: React.FC = () => {
           </div>
         </div>
 
+ {/* Search Input */}
+ <div className="mb-6">
+          <label htmlFor="search" className="block text-gray-700 font-medium mb-2">
+            Search Cars
+          </label>
+          <input
+            type="text"
+            id="search"
+            placeholder="Search by vehicle name..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
+          />
+        </div>
+
+
+
         {/* Car List */}
         <h3 className="text-xl font-semibold text-gray-800 mb-4 text-center">Cars in Catalog</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {filteredCars.map((car) => (
             <div key={car.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
               {car.imageUrl && (
