@@ -6,6 +6,7 @@ import Filters from "./MainPageComponents/Filters";
 import SearchAndSort from "./MainPageComponents/SearchAndSort";
 import ComparisonModal from "./MainPageComponents/ComparisonModal";
 import { Car } from "./MainPageComponents/types";
+import Footer from "./components/footer";
 
 interface CarListProps {
   isLoggedIn: boolean;
@@ -191,6 +192,7 @@ const CarList: React.FC<CarListProps> = ({ isLoggedIn }) => {
           onClose={handleCloseModal}
         />
       </div>
+      <Footer></Footer>
     </div>
   );
 };

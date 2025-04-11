@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "./services/axiosConfig";
 import { BASE_URL } from "./config";
+import Footer from "./components/footer";
 
 interface Car {
   id: number;

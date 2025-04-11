@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "../services/axiosConfig";
 import { Car } from "../MainPageComponents/types";
+import { BASE_URL } from "../config";
+import Footer from "./footer";
+
 
 const Profile: React.FC = () => {
   const [favorites, setFavorites] = useState<Car[]>([]);
@@ -56,7 +59,6 @@ const Profile: React.FC = () => {
       return;
     }
 
-    // Client-side validation
     if (!currentPassword || !newPassword || !confirmPassword) {
       setError("All password fields are required.");
       return;
@@ -87,7 +89,6 @@ const Profile: React.FC = () => {
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
-      // Clear success message after 3 seconds
       setTimeout(() => setPasswordChangeSuccess(null), 3000);
     } catch (err: any) {
       console.error("Error changing password:", err);
@@ -166,13 +167,24 @@ const Profile: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full">
             {favorites.map((car) => (
               <div key={car.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
-                {car.imageUrl && (
-                  <img
-                    src={car.imageUrl}
-                    alt={car.vehicle}
-                    className="w-full h-48 object-cover rounded-t-lg"
-                  />
-                )}
+                <img
+                  src={
+                    car.imageUrl
+                      ? car.imageUrl.startsWith("http")
+                        ? car.imageUrl
+                        : BASE_URL + car.imageUrl
+                      : "/placeholder.png" // Local placeholder
+                  }
+                  alt={car.vehicle}
+                  className="w-full h-48 object-cover rounded-t-lg"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    if (target.src !== window.location.origin + "/placeholder.png") {
+                      console.warn(`Failed to load image: ${target.src}`);
+                      target.src = "/placeholder.png";
+                    }
+                  }}
+                />
                 <div className="p-4">
                   <h3 className="text-lg font-semibold text-gray-800 mb-2">{car.vehicle}</h3>
                   <p className="text-gray-600 mb-4">
@@ -190,8 +202,10 @@ const Profile: React.FC = () => {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 };
+
 
 export default Profile;
