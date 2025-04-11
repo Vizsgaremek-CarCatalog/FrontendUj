@@ -9,9 +9,7 @@ interface CarCardProps {
   setSelectedCar: (value: number | null) => void;
   setSelectedCarsForComparison: React.Dispatch<React.SetStateAction<Car[]>>;
   carComments: { [key: number]: string[] };
-  setCarComments: React.Dispatch<
-    React.SetStateAction<{ [key: number]: string[] }>
-  >;
+  setCarComments: React.Dispatch<React.SetStateAction<{ [key: number]: string[] }>>;
   isLoggedIn: boolean;
 }
 
@@ -29,18 +27,16 @@ const CarCard: React.FC<CarCardProps> = ({
   const handleComparisonClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     setSelectedCarsForComparison((prev) => {
-        if (isCompared) {
-            // Remove the car from the comparison list and toggle back to blue
-            setIsCompared(false);
-            return prev.filter((selectedCar) => selectedCar.id !== car.id);
-        } else if (prev.length < 2) {
-            // Add the car to the comparison list and toggle to green
-            setIsCompared(true);
-            return [...prev, car];
-        }
-        return prev;
+      if (isCompared) {
+        setIsCompared(false);
+        return prev.filter((selectedCar) => selectedCar.id !== car.id);
+      } else if (prev.length < 2) {
+        setIsCompared(true);
+        return [...prev, car];
+      }
+      return prev;
     });
-};
+  };
 
   return (
     <div className="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col w-full">
@@ -51,15 +47,23 @@ const CarCard: React.FC<CarCardProps> = ({
         onClick={() => setSelectedCar(selectedCar === car.id ? null : car.id)}
       >
         <div className="relative w-full h-64">
-          {" "}
-          {/* Increased height to h-64 */}
           <img
             src={
-              BASE_URL + car.imageUrl ||
-              "https://via.placeholder.com/400x250?text=Car+Image"
+              car.imageUrl
+                ? car.imageUrl.startsWith('http')
+                  ? car.imageUrl
+                  : BASE_URL + car.imageUrl
+                : "/placeholder.png" // Default to local placeholder
             }
             alt={car.vehicle}
-            className="w-full h-full object-contain rounded-lg shadow-md" // object-contain to avoid cropping
+            className="w-full h-full object-contain rounded-lg shadow-md"
+            onError={(e) => {
+              const target = e.currentTarget;
+              if (target.src !== window.location.origin + "/placeholder.png") {
+                console.warn(`Failed to load image: ${target.src}`);
+                target.src = "/placeholder.png"; // Local fallback
+              }
+            }}
           />
         </div>
         <div className="p-4">

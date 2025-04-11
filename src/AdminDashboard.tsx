@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "./services/axiosConfig";
+import { BASE_URL } from "./config";
 
 interface Car {
   id: number;
@@ -93,6 +94,19 @@ const AdminDashboard: React.FC = () => {
       return;
     }
 
+    if (selectedImage) {
+      const validImageTypes = ["image/jpeg", "image/png", "image/gif"];
+      if (!validImageTypes.includes(selectedImage.type)) {
+        setError("Please upload a valid image file (JPEG, PNG, or GIF).");
+        return;
+      }
+      const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+      if (selectedImage.size > maxSize) {
+        setError("Image file size must be less than 5MB.");
+        return;
+      }
+    }
+
     setIsSubmitting(true);
     setError(null);
 
@@ -117,6 +131,8 @@ const AdminDashboard: React.FC = () => {
           "Content-Type": "multipart/form-data",
         },
       });
+
+      console.log("Add car response:", response.data);
       setCars([...cars, response.data]);
       setNewCar({
         vehicle: "",
@@ -134,7 +150,10 @@ const AdminDashboard: React.FC = () => {
       setSelectedImage(null);
     } catch (error: any) {
       console.error("Error adding car:", error.response?.data || error.message);
-      setError(error.response?.data?.message || "Failed to add car.");
+      setError(
+        error.response?.data?.message ||
+          "Failed to add car. Please check the image and try again."
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -157,8 +176,9 @@ const AdminDashboard: React.FC = () => {
 
   const deleteComment = async (carId: number, commentId: number) => {
     const userId = localStorage.getItem("userId");
+
     if (!userId || isNaN(parseInt(userId, 10))) {
-      setError("You must be logged in as an admin to delete comments.");
+      setError("You must be logged in to delete comments.");
       return;
     }
 
@@ -166,15 +186,26 @@ const AdminDashboard: React.FC = () => {
       await axios.delete(`http://localhost:3000/comments/${commentId}`, {
         headers: {
           "user-id": userId,
+          admin: "true",
         },
       });
       setComments((prev) => ({
         ...prev,
         [carId]: prev[carId].filter((comment) => comment.id !== commentId),
       }));
+      setError(null);
     } catch (error: any) {
       console.error("Error deleting comment:", error.response?.data || error.message);
-      setError(error.response?.data?.message || "Failed to delete comment.");
+      const errorMessage = error.response?.data?.message;
+      if (errorMessage === "User not found") {
+        setError("Your user account could not be found. Please log in again.");
+      } else if (errorMessage === "Comment not found") {
+        setError("The comment you are trying to delete no longer exists.");
+      } else if (errorMessage.includes("permission")) {
+        setError("You do not have permission to delete this comment.");
+      } else {
+        setError("Failed to delete comment. Please try again.");
+      }
     }
   };
 
@@ -191,10 +222,8 @@ const AdminDashboard: React.FC = () => {
 
   return (
     <div className="flex justify-center min-h-screen">
-      <div className="p-6 w-full max-w-7xl"> {/* Centered container with max width */}
+      <div className="p-6 w-full max-w-7xl">
         <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Admin Dashboard</h1>
-
-       
 
         {/* Add Car Form */}
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
@@ -202,7 +231,9 @@ const AdminDashboard: React.FC = () => {
           {error && <div className="text-red-500 mb-4">{error}</div>}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label htmlFor="vehicle" className="block text-gray-700 font-medium mb-2">Vehicle Name</label>
+              <label htmlFor="vehicle" className="block text-gray-700 font-medium mb-2">
+                Vehicle Name
+              </label>
               <input
                 type="text"
                 id="vehicle"
@@ -213,7 +244,9 @@ const AdminDashboard: React.FC = () => {
               />
             </div>
             <div>
-              <label htmlFor="type" className="block text-gray-700 font-medium mb-2">Car Type</label>
+              <label htmlFor="type" className="block text-gray-700 font-medium mb-2">
+                Car Type
+              </label>
               <input
                 type="text"
                 id="type"
@@ -224,7 +257,9 @@ const AdminDashboard: React.FC = () => {
               />
             </div>
             <div>
-              <label htmlFor="color" className="block text-gray-700 font-medium mb-2">Car Color</label>
+              <label htmlFor="color" className="block text-gray-700 font-medium mb-2">
+                Car Color
+              </label>
               <input
                 type="text"
                 id="color"
@@ -235,7 +270,9 @@ const AdminDashboard: React.FC = () => {
               />
             </div>
             <div>
-              <label htmlFor="fuel" className="block text-gray-700 font-medium mb-2">Fuel Type</label>
+              <label htmlFor="fuel" className="block text-gray-700 font-medium mb-2">
+                Fuel Type
+              </label>
               <input
                 type="text"
                 id="fuel"
@@ -246,7 +283,9 @@ const AdminDashboard: React.FC = () => {
               />
             </div>
             <div>
-              <label htmlFor="manufacturer" className="block text-gray-700 font-medium mb-2">Manufacturer</label>
+              <label htmlFor="manufacturer" className="block text-gray-700 font-medium mb-2">
+                Manufacturer
+              </label>
               <input
                 type="text"
                 id="manufacturer"
@@ -257,7 +296,9 @@ const AdminDashboard: React.FC = () => {
               />
             </div>
             <div>
-              <label htmlFor="mass" className="block text-gray-700 font-medium mb-2">Mass (kg)</label>
+              <label htmlFor="mass" className="block text-gray-700 font-medium mb-2">
+                Mass (kg)
+              </label>
               <input
                 type="number"
                 id="mass"
@@ -268,7 +309,9 @@ const AdminDashboard: React.FC = () => {
               />
             </div>
             <div>
-              <label htmlFor="image" className="block text-gray-700 font-medium mb-2">Car Image</label>
+              <label htmlFor="image" className="block text-gray-700 font-medium mb-2">
+                Car Image
+              </label>
               <input
                 type="file"
                 id="image"
@@ -278,7 +321,9 @@ const AdminDashboard: React.FC = () => {
               />
             </div>
             <div>
-              <label htmlFor="price" className="block text-gray-700 font-medium mb-2">Price</label>
+              <label htmlFor="price" className="block text-gray-700 font-medium mb-2">
+                Price
+              </label>
               <input
                 type="number"
                 id="price"
@@ -289,7 +334,9 @@ const AdminDashboard: React.FC = () => {
               />
             </div>
             <div className="md:col-span-2">
-              <label htmlFor="description" className="block text-gray-700 font-medium mb-2">Description</label>
+              <label htmlFor="description" className="block text-gray-700 font-medium mb-2">
+                Description
+              </label>
               <textarea
                 id="description"
                 placeholder="Enter description"
@@ -299,7 +346,9 @@ const AdminDashboard: React.FC = () => {
               />
             </div>
             <div>
-              <label htmlFor="yearMade" className="block text-gray-700 font-medium mb-2">Year Made</label>
+              <label htmlFor="yearMade" className="block text-gray-700 font-medium mb-2">
+                Year Made
+              </label>
               <input
                 type="number"
                 id="yearMade"
@@ -309,7 +358,9 @@ const AdminDashboard: React.FC = () => {
               />
             </div>
             <div>
-              <label htmlFor="horsePower" className="block text-gray-700 font-medium mb-2">Horsepower</label>
+              <label htmlFor="horsePower" className="block text-gray-700 font-medium mb-2">
+                Horsepower
+              </label>
               <input
                 type="number"
                 id="horsePower"
@@ -332,8 +383,8 @@ const AdminDashboard: React.FC = () => {
           </div>
         </div>
 
- {/* Search Input */}
- <div className="mb-6">
+        {/* Search Input */}
+        <div className="mb-6">
           <label htmlFor="search" className="block text-gray-700 font-medium mb-2">
             Search Cars
           </label>
@@ -347,20 +398,29 @@ const AdminDashboard: React.FC = () => {
           />
         </div>
 
-
-
         {/* Car List */}
         <h3 className="text-xl font-semibold text-gray-800 mb-4 text-center">Cars in Catalog</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {filteredCars.map((car) => (
             <div key={car.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
-              {car.imageUrl && (
-                <img
-                  src={car.imageUrl}
-                  alt={car.vehicle}
-                  className="w-full h-48 object-cover rounded-t-lg"
-                />
-              )}
+              <img
+                src={
+                  car.imageUrl
+                    ? car.imageUrl.startsWith('http')
+                      ? car.imageUrl
+                      : BASE_URL + car.imageUrl
+                    : "/placeholder.png" // Default to local placeholder
+                }
+                alt={car.vehicle}
+                className="w-full h-48 object-cover rounded-t-lg"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (target.src !== window.location.origin + "/placeholder.png") {
+                    console.warn(`Failed to load image: ${target.src}`);
+                    target.src = "/placeholder.png"; // Local fallback
+                  }
+                }}
+              />
               <div className="p-4">
                 <h4 className="text-lg font-semibold text-gray-800 mb-2">{car.vehicle}</h4>
                 <p className="text-gray-600 mb-4">

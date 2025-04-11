@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "./services/axiosConfig";
 import CarCard from "./MainPageComponents/CarCard";
-import CheckboxFilters from "./MainPageComponents/CheckboxFilters";
+import CheckboxFilters from "./MainPageComponents/CheckBoxFilters";
 import Filters from "./MainPageComponents/Filters";
 import SearchAndSort from "./MainPageComponents/SearchAndSort";
 import ComparisonModal from "./MainPageComponents/ComparisonModal";
