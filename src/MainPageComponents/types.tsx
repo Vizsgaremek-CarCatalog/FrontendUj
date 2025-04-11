@@ -12,3 +12,9 @@ export interface Car {
   yearMade: number;
   horsePower: number;
 }
+
+export interface Comment {
+  id: number;
+  carId: number;
+  text: string;
+}
