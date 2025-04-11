@@ -11,14 +11,14 @@ const ComparisonModal: React.FC<ComparisonModalProps> = ({ selectedCars, onClose
   if (selectedCars.length !== 2) return null;
 
   return (
-    <div 
+    <div
       className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
       role="dialog"
       onClick={onClose}
     >
-      <div 
+      <div
         className="bg-white rounded-lg shadow-lg w-full max-w-4xl mx-4 animate-float-in"
-        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
+        onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="p-6 border-b border-gray-200 flex justify-between items-center">
@@ -29,45 +29,60 @@ const ComparisonModal: React.FC<ComparisonModalProps> = ({ selectedCars, onClose
         <div className="p-6">
           <div className="flex flex-col md:flex-row justify-between gap-6">
             {selectedCars.map((car) => (
-              <div 
-                key={car.id} 
-                className="flex-1 bg-white rounded-lg shadow-md overflow-hidden"
+              <div
+                key={car.id}
+                className="flex-1 bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full"
               >
                 <img
-                  src={BASE_URL + car.imageUrl || "https://via.placeholder.com/400x250?text=Car+Image"}
+                  src={
+                    car.imageUrl
+                      ? car.imageUrl.startsWith("http")
+                        ? car.imageUrl
+                        : BASE_URL + car.imageUrl
+                      : "/placeholder.jpg" // Local placeholder
+                  }
                   alt={car.vehicle}
-                  className="w-full h-auto rounded-t-lg"
+                  className="w-full h-48 object-cover rounded-t-lg" // Fixed height
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    if (target.src !== window.location.origin + "/placeholder.jpg") {
+                      console.warn(`Failed to load image: ${target.src}`);
+                      target.src = "/placeholder.jpg";
+                    }
+                  }}
                 />
-                <div className="p-4">
-                  <h5 className="text-lg font-semibold text-gray-800 mb-4">{car.vehicle}</h5>
-                  <table className="table-auto w-full text-left border-collapse">
-                    <tbody>
-                      <tr className="border-b">
-                        <th className="py-2 px-4 font-medium text-gray-700 bg-gray-100">Type</th>
-                        <td className="py-2 px-4">{car.type}</td>
-                      </tr>
-                      <tr className="border-b">
-                        <th className="py-2 px-4 font-medium text-gray-700 bg-gray-100">Price</th>
-                        <td className="py-2 px-4">${car.price.toLocaleString()}</td>
-                      </tr>
-                      <tr className="border-b">
-                        <th className="py-2 px-4 font-medium text-gray-700 bg-gray-100">Horsepower</th>
-                        <td className="py-2 px-4">{car.horsePower} HP</td>
-                      </tr>
-                      <tr className="border-b">
-                        <th className="py-2 px-4 font-medium text-gray-700 bg-gray-100">Fuel</th>
-                        <td className="py-2 px-4">{car.fuel}</td>
-                      </tr>
-                      <tr className="border-b">
-                        <th className="py-2 px-4 font-medium text-gray-700 bg-gray-100">Mass</th>
-                        <td className="py-2 px-4">{car.mass}</td>
-                      </tr>
-                      <tr className="border-b">
-                        <th className="py-2 px-4 font-medium text-gray-700 bg-gray-100">Year</th>
-                        <td className="py-2 px-4">{car.yearMade}</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                <div className="p-4 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h5 className="text-lg font-semibold text-gray-800 mb-4">{car.vehicle}</h5>
+                    <table className="table-auto w-full text-left border-collapse">
+                      <tbody>
+                        <tr className="border-b">
+                          <th className="py-2 px-4 font-medium text-gray-700 bg-gray-100">Type</th>
+                          <td className="py-2 px-4">{car.type}</td>
+                        </tr>
+                        <tr className="border-b">
+                          <th className="py-2 px-4 font-medium text-gray-700 bg-gray-100">Price</th>
+                          <td className="py-2 px-4">${car.price.toLocaleString()}</td>
+                        </tr>
+                        <tr className="border-b">
+                          <th className="py-2 px-4 font-medium text-gray-700 bg-gray-100">Horsepower</th>
+                          <td className="py-2 px-4">{car.horsePower} HP</td>
+                        </tr>
+                        <tr className="border-b">
+                          <th className="py-2 px-4 font-medium text-gray-700 bg-gray-100">Fuel</th>
+                          <td className="py-2 px-4">{car.fuel}</td>
+                        </tr>
+                        <tr className="border-b">
+                          <th className="py-2 px-4 font-medium text-gray-700 bg-gray-100">Mass</th>
+                          <td className="py-2 px-4">{car.mass} kg</td>
+                        </tr>
+                        <tr className="border-b">
+                          <th className="py-2 px-4 font-medium text-gray-700 bg-gray-100">Year</th>
+                          <td className="py-2 px-4">{car.yearMade}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             ))}
