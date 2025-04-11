@@ -14,19 +14,15 @@ const ComparisonModal: React.FC<ComparisonModalProps> = ({ selectedCars, onClose
     <div 
       className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
       role="dialog"
+      onClick={onClose}
     >
       <div 
         className="bg-white rounded-lg shadow-lg w-full max-w-4xl mx-4 animate-float-in"
+        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
       >
         {/* Header */}
         <div className="p-6 border-b border-gray-200 flex justify-between items-center">
           <h5 className="text-xl font-bold text-gray-800">Compare Cars</h5>
-          <button 
-            onClick={onClose}
-            className="text-gray-600 hover:text-gray-800 transition-colors duration-200"
-          >
-            <span className="text-2xl">&times;</span>
-          </button>
         </div>
 
         {/* Body */}

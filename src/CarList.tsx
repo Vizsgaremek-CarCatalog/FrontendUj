@@ -14,10 +14,16 @@ interface CarListProps {
 const CarList: React.FC<CarListProps> = ({ isLoggedIn }) => {
   const [cars, setCars] = useState<Car[]>([]);
   const [selectedCar, setSelectedCar] = useState<number | null>(null);
-  const [selectedCarsForComparison, setSelectedCarsForComparison] = useState<Car[]>([]);
-  const [carComments, setCarComments] = useState<{ [key: number]: string[] }>({});
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 100000]);
-  const [horsePowerRange, setHorsePowerRange] = useState<[number, number]>([0, 1000]);
+  const [selectedCarsForComparison, setSelectedCarsForComparison] = useState<
+    Car[]
+  >([]);
+  const [carComments, setCarComments] = useState<{ [key: number]: string[] }>(
+    {}
+  );
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000000]);
+  const [horsePowerRange, setHorsePowerRange] = useState<[number, number]>([
+    0, 1000,
+  ]);
   const [search, setSearch] = useState("");
   const [sortKey, setSortKey] = useState<keyof Car | "">("");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
@@ -29,6 +35,8 @@ const CarList: React.FC<CarListProps> = ({ isLoggedIn }) => {
     massOptions: [] as string[],
     yearOptions: [] as string[],
   });
+
+ 
 
   useEffect(() => {
     const fetchCars = async () => {
@@ -64,12 +72,18 @@ const CarList: React.FC<CarListProps> = ({ isLoggedIn }) => {
 
   const filteredCars = cars
     .filter((car) => {
-      const matchesSearch = car.vehicle.toLowerCase().includes(search.toLowerCase());
-      const matchesPrice = car.price >= priceRange[0] && car.price <= priceRange[1];
-      const matchesHorsePower = car.horsePower >= horsePowerRange[0] && car.horsePower <= horsePowerRange[1];
+      const matchesSearch = car.vehicle
+        .toLowerCase()
+        .includes(search.toLowerCase());
+      const matchesPrice =
+        car.price >= priceRange[0] && car.price <= priceRange[1];
+      const matchesHorsePower =
+        car.horsePower >= horsePowerRange[0] &&
+        car.horsePower <= horsePowerRange[1];
       const matchesFilters =
         // Fixed typo: manufacturerssandlength -> manufacturers.length
-        (!filters.manufacturers.length || filters.manufacturers.includes(car.manufacturer)) &&
+        (!filters.manufacturers.length ||
+          filters.manufacturers.includes(car.manufacturer)) &&
         (!filters.types.length || filters.types.includes(car.type)) &&
         (!filters.colors.length || filters.colors.includes(car.color)) &&
         (!filters.fuels.length || filters.fuels.includes(car.fuel)) &&
@@ -89,9 +103,13 @@ const CarList: React.FC<CarListProps> = ({ isLoggedIn }) => {
               : range.includes("<")
               ? [0, 2000]
               : range.split("-").map(Number);
-            return car.yearMade >= min && (max === Infinity || car.yearMade <= max);
+            return (
+              car.yearMade >= min && (max === Infinity || car.yearMade <= max)
+            );
           }));
-      return matchesSearch && matchesPrice && matchesHorsePower && matchesFilters;
+      return (
+        matchesSearch && matchesPrice && matchesHorsePower && matchesFilters
+      );
     })
     .sort((a, b) => {
       if (!sortKey) return 0;
@@ -102,13 +120,24 @@ const CarList: React.FC<CarListProps> = ({ isLoggedIn }) => {
           ? aValue.localeCompare(bValue)
           : bValue.localeCompare(aValue);
       }
-      return sortOrder === "asc" ? Number(aValue) - Number(bValue) : Number(bValue) - Number(aValue);
+      return sortOrder === "asc"
+        ? Number(aValue) - Number(bValue)
+        : Number(bValue) - Number(aValue);
     });
+    const [resetComparison, setResetComparison] = useState(false);
+
+    const handleCloseModal = () => {
+      setSelectedCarsForComparison([]); // Reset selected cars
+      setResetComparison(true); // Trigger reset for comparison buttons
+      setTimeout(() => setResetComparison(false), 0); // Reset the flag immediately after
+    };
 
   return (
     <div className="min-h-screen w-screen bg-gray-100 p-0 m-0">
       <div className="w-full p-6">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Car Catalog</h1>
+        <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+          Car Catalog
+        </h1>
         <SearchAndSort
           search={search}
           setSearch={setSearch}
@@ -128,7 +157,9 @@ const CarList: React.FC<CarListProps> = ({ isLoggedIn }) => {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full">
           {filteredCars.length === 0 ? (
-            <p className="text-gray-600 text-center col-span-full">No cars match your filters.</p>
+            <p className="text-gray-600 text-center col-span-full">
+              No cars match your filters.
+            </p>
           ) : (
             filteredCars.map((car) => (
               <div key={car.id} className="relative">
@@ -140,6 +171,7 @@ const CarList: React.FC<CarListProps> = ({ isLoggedIn }) => {
                   carComments={carComments}
                   setCarComments={setCarComments}
                   isLoggedIn={isLoggedIn}
+                  resetComparison={resetComparison}
                 />
                 {isLoggedIn && (
                   <button
@@ -153,9 +185,10 @@ const CarList: React.FC<CarListProps> = ({ isLoggedIn }) => {
             ))
           )}
         </div>
+        {/* Render Comparison Modal */}
         <ComparisonModal
           selectedCars={selectedCarsForComparison}
-          onClose={() => setSelectedCarsForComparison([])}
+          onClose={handleCloseModal}
         />
       </div>
     </div>
