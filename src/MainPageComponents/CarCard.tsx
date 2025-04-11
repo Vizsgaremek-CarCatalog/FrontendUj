@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Car } from "./types";
 import CarDetails from "./CarDetails";
 import { BASE_URL } from "../config";
@@ -11,6 +11,7 @@ interface CarCardProps {
   carComments: { [key: number]: string[] };
   setCarComments: React.Dispatch<React.SetStateAction<{ [key: number]: string[] }>>;
   isLoggedIn: boolean;
+  resetComparison: boolean;
 }
 
 const CarCard: React.FC<CarCardProps> = ({
@@ -21,16 +22,25 @@ const CarCard: React.FC<CarCardProps> = ({
   carComments,
   setCarComments,
   isLoggedIn,
+  resetComparison,
 }) => {
   const [isCompared, setIsCompared] = useState(false);
+
+  useEffect(() => {
+    if (resetComparison) {
+      setIsCompared(false); // Reset the button state to blue
+    }
+  }, [resetComparison]);
 
   const handleComparisonClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     setSelectedCarsForComparison((prev) => {
       if (isCompared) {
+        // Remove the car from the comparison list and toggle back to blue
         setIsCompared(false);
         return prev.filter((selectedCar) => selectedCar.id !== car.id);
       } else if (prev.length < 2) {
+        // Add the car to the comparison list and toggle to green
         setIsCompared(true);
         return [...prev, car];
       }
