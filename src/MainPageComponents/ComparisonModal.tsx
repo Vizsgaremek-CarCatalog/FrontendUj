@@ -1,5 +1,6 @@
 import React from "react";
 import { Car } from "./types";
+import { BASE_URL } from "../config";
 
 interface ComparisonModalProps {
   selectedCars: Car[];
@@ -14,7 +15,9 @@ const ComparisonModal: React.FC<ComparisonModalProps> = ({ selectedCars, onClose
       className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
       role="dialog"
     >
-      <div className="bg-white rounded-lg shadow-lg w-full max-w-4xl mx-4">
+      <div 
+        className="bg-white rounded-lg shadow-lg w-full max-w-4xl mx-4 animate-float-in"
+      >
         {/* Header */}
         <div className="p-6 border-b border-gray-200 flex justify-between items-center">
           <h5 className="text-xl font-bold text-gray-800">Compare Cars</h5>
@@ -35,7 +38,7 @@ const ComparisonModal: React.FC<ComparisonModalProps> = ({ selectedCars, onClose
                 className="flex-1 bg-white rounded-lg shadow-md overflow-hidden"
               >
                 <img
-                  src={car.imageUrl || "https://via.placeholder.com/400x250?text=Car+Image"}
+                  src={BASE_URL + car.imageUrl || "https://via.placeholder.com/400x250?text=Car+Image"}
                   alt={car.vehicle}
                   className="w-full h-auto rounded-t-lg"
                 />
@@ -43,8 +46,7 @@ const ComparisonModal: React.FC<ComparisonModalProps> = ({ selectedCars, onClose
                   <h5 className="text-lg font-semibold text-gray-800 mb-4">{car.vehicle}</h5>
                   <table className="table-auto w-full text-left border-collapse">
                     <tbody>
-
-                    <tr className="border-b">
+                      <tr className="border-b">
                         <th className="py-2 px-4 font-medium text-gray-700 bg-gray-100">Type</th>
                         <td className="py-2 px-4">{car.type}</td>
                       </tr>
@@ -64,7 +66,6 @@ const ComparisonModal: React.FC<ComparisonModalProps> = ({ selectedCars, onClose
                         <th className="py-2 px-4 font-medium text-gray-700 bg-gray-100">Mass</th>
                         <td className="py-2 px-4">{car.mass}</td>
                       </tr>
-
                       <tr className="border-b">
                         <th className="py-2 px-4 font-medium text-gray-700 bg-gray-100">Year</th>
                         <td className="py-2 px-4">{car.yearMade}</td>

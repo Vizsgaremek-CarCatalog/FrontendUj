@@ -5,7 +5,7 @@ export default function Footer() {
                 © {new Date().getFullYear()} Car Showcase. All rights reserved.
             </p>
             <p className="text-sm">
-                
+                Contact us: <a href="mailto:info@carshowcase.com" className="text-blue-400 hover:underline">info@carshowcase.com</a>
             </p>
         </footer>
     );

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../index.css"; 
 import Footer from "./footer";
 import RoutingService from "../services/RoutingService";
+import { BASE_URL } from "../config";
 
 export default function Home() {
     const [extendedImages, setExtendedImages] = useState<string[]>([]);
@@ -24,24 +25,25 @@ export default function Home() {
     };
 
     useEffect(() => {
+        // Fetch car images from the backend
         fetch("http://localhost:3000/carcatalog")
             .then((response) => response.json())
             .then((data) => {
-                const imageUrls = data.map((car: { imageUrl: string }) => `http://localhost:3000${car.imageUrl}`);
-                const duplicatedUrls = [...imageUrls, ...imageUrls];
-                preloadImages(duplicatedUrls)
+                const imageUrls = data.map((car: { imageUrl: string }) => `${BASE_URL}${car.imageUrl}`);
+                const duplicatedUrls = [...imageUrls, ...imageUrls]; // Duplicate the array in memory
+                preloadImages(duplicatedUrls) // Preload the duplicated array
                     .then(() => {
-                        setExtendedImages(duplicatedUrls);
-                        setLoading(false);
+                        setExtendedImages(duplicatedUrls); // Set the preloaded array
+                        setLoading(false); // Set loading to false after images are preloaded
                     })
                     .catch((error) => {
                         console.error("Error preloading images:", error);
-                        setLoading(false);
+                        setLoading(false); // Set loading to false even if there's an error
                     });
             })
             .catch((error) => {
                 console.error("Error fetching car images:", error);
-                setLoading(false);
+                setLoading(false); // Set loading to false even if there's an error
             });
     }, []);
 
@@ -63,7 +65,7 @@ export default function Home() {
                         {extendedImages.map((image, index) => (
                             <div
                                 key={index}
-                                className="flex-shrink-0 w-50 h-30 mx-2 bg-white border-4 border-white shadow-lg"
+                                className="flex-shrink-0 w-28 h-20 mx-2 bg-white border-4 border-white shadow-lg"
                             >
                                 <img
                                     src={image}
@@ -76,7 +78,7 @@ export default function Home() {
                             {extendedImages.map((image, index) => (
                                 <div
                                     key={`duplicate-${index}`}
-                                    className="flex-shrink-0 w-50 h-30 mx-2 bg-white border-4 border-white shadow-lg"
+                                    className="flex-shrink-0 w-28 h-20 mx-2 bg-white border-4 border-white shadow-lg"
                                 >
                                     <img
                                         src={image}
@@ -141,25 +143,6 @@ export default function Home() {
                             <p className="mt-4 font-semibold">- Alex Johnson</p>
                         </div>
                     </div>
-                </div>
-
-                {/* Newsletter Signup Section */}
-                <div className="py-16 bg-gray-100 text-center w-full">
-                    <h2 className="text-3xl font-bold mb-6">Stay Updated</h2>
-                    <p className="mb-4">Subscribe to our newsletter for the latest updates and offers.</p>
-                    <form className="flex justify-center w-full px-6">
-                        <input
-                            type="email"
-                            placeholder="Enter your email"
-                            className="px-4 py-2 border rounded-l-lg focus:outline-none w-full max-w-md"
-                        />
-                        <button
-                            type="submit"
-                            className="px-6 py-2 bg-blue-500 text-white rounded-r-lg hover:bg-blue-600 transition"
-                        >
-                            Subscribe
-                        </button>
-                    </form>
                 </div>
             </div>
 
