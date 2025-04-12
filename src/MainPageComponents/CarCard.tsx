@@ -68,7 +68,7 @@ const CarCard: React.FC<CarCardProps> = ({
     <>
       <div className="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col w-full">
         <div
-          className={`cursor-pointer w-full p-4 rounded-lg ${selectedCar === car.id && !isAdmin ? "border-2 border-blue-500" : ""}`}
+          className={`cursor-pointer w-full p-4 rounded-lg border-2 border-gray-300 ${selectedCar === car.id && !isAdmin ? "border-3 border-gray-500" : ""}`}
           onClick={handleCardClick}
         >
           <div className="relative w-full h-64">
@@ -139,7 +139,7 @@ const CarCard: React.FC<CarCardProps> = ({
       {!isAdmin && selectedCar === car.id && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={closeModal}>
           <div
-            className="bg-white rounded-lg shadow-lg w-full max-w-3xl mx-4 animate-float-in rounded-lg border-2 border-purple-500"
+            className="bg-white rounded-lg shadow-lg w-full max-w-3xl mx-4 animate-float-in rounded-lg border-4" style={{border: `3px solid ${car.color.toLocaleLowerCase() || "blue"}`}}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="p-6 border-b border-gray-200 flex justify-between items-center">

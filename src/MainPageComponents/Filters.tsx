@@ -24,7 +24,7 @@ const Filters: React.FC<FiltersProps> = ({
         <Slider
           range
           min={0}
-          max={1000000}
+          max={10000000}
           defaultValue={priceRange}
           onChange={(value) => setPriceRange(value as [number, number])}
           trackStyle={{ backgroundColor: '#3b82f6', height: 6 }}
