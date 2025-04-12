@@ -50,11 +50,11 @@ const CheckboxFilters: React.FC<CheckboxFiltersProps> = ({ onFilterChange }) => 
   ];
   
   const massOptions = [
-    "<1000 kg", "1000-2000 kg", "2000-3000 kg", ">3000 kg"
+    "<1000 kg", "1000-2000 kg", "2001-3000 kg", ">3000 kg"
   ];
   
   const yearOptions = [
-    "<2000", "2000-2010", "2010-2020", ">2020", "2025"
+    "<2000", "1999-2011", "2010-2020", ">2020", 
   ];
 
   const handleCheckboxChange = (category: keyof CheckboxFiltersState, value: string) => {

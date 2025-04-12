@@ -36,7 +36,7 @@ export default function Home() {
               ? car.imageUrl.startsWith('http')
                 ? car.imageUrl
                 : `${BASE_URL}${car.imageUrl}`
-              : "/placeholder.jpg" // Default to local placeholder
+              : "/placeholder.png" // Default to local placeholder
           )
           .filter((url) => url !== "/placeholder.png"); // Exclude placeholder for slideshow
         const duplicatedUrls = [...imageUrls, ...imageUrls];
