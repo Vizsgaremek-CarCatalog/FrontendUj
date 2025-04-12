@@ -42,7 +42,7 @@ const ComparisonModal: React.FC<ComparisonModalProps> = ({ selectedCars, onClose
                       : "/placeholder.jpg" // Local placeholder
                   }
                   alt={car.vehicle}
-                  className="w-full h-48 object-cover rounded-t-lg" // Fixed height
+                  className="w-full h-48 object-scale-down rounded-t-lg shadow-xl" // Fixed height
                   onError={(e) => {
                     const target = e.currentTarget;
                     if (target.src !== window.location.origin + "/placeholder.jpg") {
@@ -53,7 +53,7 @@ const ComparisonModal: React.FC<ComparisonModalProps> = ({ selectedCars, onClose
                 />
                 <div className="p-4 flex-1 flex flex-col justify-between">
                   <div>
-                    <h5 className="text-lg font-semibold text-gray-800 mb-4">{car.vehicle}</h5>
+                    <h5 className="text-lg font-semibold text-gray-800 mb-4">{car.manufacturer} - {car.vehicle}</h5>
                     <table className="table-auto w-full text-left border-collapse">
                       <tbody>
                         <tr className="border-b">

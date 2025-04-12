@@ -68,7 +68,7 @@ const CarCard: React.FC<CarCardProps> = ({
     <>
       <div className="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col w-full">
         <div
-          className={`cursor-pointer w-full p-4 ${selectedCar === car.id && !isAdmin ? "border-2 border-blue-500" : ""}`}
+          className={`cursor-pointer w-full p-4 rounded-lg ${selectedCar === car.id && !isAdmin ? "border-2 border-blue-500" : ""}`}
           onClick={handleCardClick}
         >
           <div className="relative w-full h-64">
@@ -81,7 +81,7 @@ const CarCard: React.FC<CarCardProps> = ({
                   : "/placeholder.png"
               }
               alt={car.vehicle}
-              className="w-full h-full object-contain rounded-lg shadow-md"
+              className="w-full h-full object-scale-down rounded-lg shadow-md"
               onError={(e) => {
                 const target = e.currentTarget;
                 if (target.src !== window.location.origin + "/placeholder.png") {
@@ -92,7 +92,7 @@ const CarCard: React.FC<CarCardProps> = ({
             />
           </div>
           <div className="p-4">
-            <h1 className="text-xl font-bold text-gray-800 mb-2 hover:text-blue-500">{car.vehicle}</h1>
+            <h1 className="text-xl font-bold text-gray-800 mb-2 hover:text-blue-500">{car.manufacturer} - {car.vehicle}</h1>
             <table className="table-auto w-full text-left border-collapse">
               <tbody>
                 <tr>
@@ -139,23 +139,14 @@ const CarCard: React.FC<CarCardProps> = ({
       {!isAdmin && selectedCar === car.id && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={closeModal}>
           <div
-            className="bg-white rounded-lg shadow-lg w-full max-w-3xl mx-4 animate-float-in"
+            className="bg-white rounded-lg shadow-lg w-full max-w-3xl mx-4 animate-float-in rounded-lg border-2 border-purple-500"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="p-6 border-b border-gray-200 flex justify-between items-center">
-              <h5 className="text-xl font-bold text-gray-800">{car.vehicle} Details</h5>
-              <button
-                className="text-gray-500 hover:text-gray-700 focus:outline-none"
-                onClick={closeModal}
-                aria-label="Close"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
+              <h5 className="text-xl font-bold text-gray-800">{car.manufacturer} - {car.vehicle} </h5>
             </div>
             <div className="p-6 flex flex-col md:flex-row gap-6">
-              <div className="flex-shrink-0 w-full md:w-1/2">
+              <div className="flex-shrink-0 w-full md:w-1/2 ">
                 <img
                   src={
                     car.imageUrl
@@ -165,7 +156,7 @@ const CarCard: React.FC<CarCardProps> = ({
                       : "/placeholder.png"
                   }
                   alt={car.vehicle}
-                  className="w-full h-48 object-cover rounded-lg shadow-md md:h-64"
+                  className="w-full h-48 object-scale-down rounded-lg shadow-xl md:h-64"
                   onError={(e) => {
                     const target = e.currentTarget;
                     if (target.src !== window.location.origin + "/placeholder.png") {

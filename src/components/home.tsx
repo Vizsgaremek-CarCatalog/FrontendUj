@@ -27,7 +27,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    fetch("http://localhost:3000/carcatalog")
+    fetch(BASE_URL+"/carcatalog")
       .then((response) => response.json())
       .then((data) => {
         const imageUrls = data
@@ -79,7 +79,7 @@ export default function Home() {
                 <img
                   src={image}
                   alt={`Slide ${index}`}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-scale-down"
                   onError={(e) => {
                     const target = e.currentTarget;
                     if (target.src !== window.location.origin + "/placeholder.jpg") {

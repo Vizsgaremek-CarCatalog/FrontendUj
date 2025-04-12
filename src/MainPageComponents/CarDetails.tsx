@@ -107,7 +107,7 @@ const CarDetails: React.FC<CarDetailsProps> = ({ car, carComments, setCarComment
         </tbody>
       </table>
 
-      <p className="text-gray-600 mb-6">{car.description}</p>
+      <p className="text-gray-600 mb-6 text-left">{car.description}</p>
 
       <div className="mt-6">
         <h5 className="text-xl font-bold text-gray-800 mb-4">Comments</h5>
