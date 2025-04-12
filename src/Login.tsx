@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "./services/axiosConfig";
 import { useNavigate } from "react-router-dom";
-
+import { BASE_URL } from "./config";
 interface LoginProps {
   onLogin: (role: string) => void;
 }
@@ -15,7 +15,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/auth/login", { email, password });
+      const response = await axios.post(`${BASE_URL}/auth/login`, { email, password });
       const { token, userid, role } = response.data;
   
       localStorage.setItem("authToken", token);
@@ -38,7 +38,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
       
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-lg max-w-md mx-auto">
+    <div className="p-6 bg-white rounded-lg shadow-xl border-2 border-gray-500 max-w-md mx-auto">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Login</h2>
       {error && <div className="text-red-500 mb-4">{error}</div>}
       <form onSubmit={handleSubmit}>
