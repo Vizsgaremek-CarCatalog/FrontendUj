@@ -78,7 +78,7 @@ const List: React.FC<CarListProps> = ({ cars, comments, setCars, setComments, se
         sortOrder={sortOrder}
         setSortOrder={setSortOrder}
       />
-      <h3 className="text-xl font-semibold text-gray-800 mb-4 text-center">Cars in Catalog</h3>
+      <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4 text-center">Cars in Catalog</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {filteredCars.map((car) => (
           <div key={car.id} className="relative">
@@ -97,21 +97,21 @@ const List: React.FC<CarListProps> = ({ cars, comments, setCars, setComments, se
               commentCount={(comments[car.id] || []).length}
             />
             {openComments[car.id] && (
-              <div className="mt-2 bg-gray-50 p-4 rounded-lg">
+              <div className="mt-2 bg-gray-50 dark:bg-gray-900 p-4 rounded-lg">
                 {(comments[car.id] || []).length > 0 ? (
                   comments[car.id].map((comment) => (
                     <div key={comment.id} className="flex justify-between items-center mb-2">
-                      <p className="text-gray-600">{comment.text}</p>
+                      <p className="text-gray-600 dark:text-gray-400">{comment.text}</p>
                       <button
                         onClick={() => deleteComment(car.id, comment.id)}
-                        className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                        className="px-2 py-1 bg-red-500 dark:bg-red-600 text-white dark:text-gray-200 rounded hover:bg-red-600 dark:hover:bg-red-700"
                       >
                         Delete
                       </button>
                     </div>
                   ))
                 ) : (
-                  <p className="text-gray-600">No comments yet.</p>
+                  <p className="text-gray-600 dark:text-gray-400">No comments yet.</p>
                 )}
               </div>
             )}

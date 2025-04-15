@@ -11,18 +11,34 @@ import Profile from "./components/Profile";
 const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(!!localStorage.getItem("authToken"));
   const [isAdmin, setIsAdmin] = useState<boolean>(localStorage.getItem("userRole") === "ADMIN");
+  const [theme, setTheme] = useState<string>(localStorage.getItem("theme") || "light");
 
-  // Update state whenever localStorage changes (e.g., on login/logout)
+  // Apply theme to document and persist in localStorage
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  // Toggle theme
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
+
+  // Update state for login/logout
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     const userRole = localStorage.getItem("userRole");
     setIsLoggedIn(!!token);
-    setIsAdmin(userRole === "ADMIN"); // Match Prisma enum case
-  }, [isLoggedIn]); // Depend on isLoggedIn to re-run after login/logout
+    setIsAdmin(userRole === "ADMIN");
+  }, [isLoggedIn]);
 
   const handleLogin = (role: string) => {
     setIsLoggedIn(true);
-    setIsAdmin(role === "ADMIN"); // Ensure case matches Prisma enum
+    setIsAdmin(role === "ADMIN");
   };
 
   const handleLogout = () => {
@@ -33,8 +49,14 @@ const App: React.FC = () => {
 
   return (
     <Router>
-      <div className="w-screen min-h-screen">
-        <Navbar isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />
+      <div className="w-screen min-h-screen bg-gray-100 dark:bg-gray-900">
+        <Navbar
+          isLoggedIn={isLoggedIn}
+          isAdmin={isAdmin}
+          onLogout={handleLogout}
+          toggleTheme={toggleTheme}
+          theme={theme}
+        />
         <div className="container mt-5">
           <Routes>
             <Route path="/" element={<Home />} />

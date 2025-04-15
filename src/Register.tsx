@@ -43,47 +43,55 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-lg border-2 border-gray-500 max-w-md mx-auto">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Register</h2>
+    <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg border-2 border-gray-500 dark:border-gray-600 max-w-md mx-auto">
+      <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-6">Register</h2>
       {errorMessage && <div className="text-red-500 mb-4">{errorMessage}</div>}
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-2">Email address</label>
+          <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+            Email address
+          </label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
+            className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400"
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-2">Password</label>
+          <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+            Password
+          </label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
+            className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400"
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-2">Confirm Password</label>
+          <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+            Confirm Password
+          </label>
           <input
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
-            className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
+            className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400"
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-2">Role</label>
+          <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+            Role
+          </label>
           <select
             value={role}
             onChange={(e) => setRole(e.target.value)}
             required
-            className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
+            className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400"
           >
             <option value="USER">User</option>
             <option value="ADMIN">Admin</option>
@@ -91,21 +99,25 @@ const Register: React.FC = () => {
         </div>
         {role === "ADMIN" && (
           <div className="mb-4">
-            <label className="block text-gray-700 font-medium mb-2">Admin Password</label>
+            <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+              Admin Password
+            </label>
             <input
               type="password"
               value={adminPassword}
               onChange={(e) => setAdminPassword(e.target.value)}
               required
-              className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
+              className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400"
             />
           </div>
         )}
         <button
           type="submit"
           disabled={loading}
-          className={`w-full px-4 py-3 rounded-lg text-white transition-colors duration-200 ${
-            loading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
+          className={`w-full px-4 py-3 rounded-lg text-white dark:text-gray-200 transition-colors duration-200 ${
+            loading
+              ? "bg-gray-400 dark:bg-gray-600 cursor-not-allowed"
+              : "bg-blue-500 dark:bg-blue-600 hover:bg-blue-600 dark:hover:bg-blue-700"
           }`}
         >
           {loading ? "Loading..." : "Register"}

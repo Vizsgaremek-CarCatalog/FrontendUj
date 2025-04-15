@@ -4,7 +4,6 @@ import { Car } from "../MainPageComponents/types";
 import { BASE_URL } from "../config";
 import Footer from "./footer";
 
-
 const Profile: React.FC = () => {
   const [favorites, setFavorites] = useState<Car[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -75,14 +74,8 @@ const Profile: React.FC = () => {
     try {
       await axios.patch(
         `http://localhost:3000/users/${userId}/change-password`,
-        {
-          currentPassword,
-          newPassword,
-          confirmPassword,
-        },
-        {
-          headers: { "user-id": userId },
-        }
+        { currentPassword, newPassword, confirmPassword },
+        { headers: { "user-id": userId } }
       );
       setPasswordChangeSuccess("Password changed successfully!");
       setError(null);
@@ -97,20 +90,27 @@ const Profile: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen w-screen bg-gray-100 p-0 m-0">
+    <div className="min-h-screen w-screen bg-gray-100 dark:bg-gray-900 p-0 m-0">
       <div className="w-full p-6 max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Your Profile</h1>
+        <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-200 mb-6 text-center">
+          Your Profile
+        </h1>
 
         {/* Change Password Form */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">Change Password</h2>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
+          <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
+            Change Password
+          </h2>
           {error && <div className="text-red-500 mb-4 text-center">{error}</div>}
           {passwordChangeSuccess && (
             <div className="text-green-500 mb-4 text-center">{passwordChangeSuccess}</div>
           )}
           <div className="grid grid-cols-1 gap-4">
             <div>
-              <label htmlFor="currentPassword" className="block text-gray-700 font-medium mb-2">
+              <label
+                htmlFor="currentPassword"
+                className="block text-gray-700 dark:text-gray-300 font-medium mb-2"
+              >
                 Current Password
               </label>
               <input
@@ -118,12 +118,15 @@ const Profile: React.FC = () => {
                 id="currentPassword"
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
-                className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
+                className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400"
                 placeholder="Enter current password"
               />
             </div>
             <div>
-              <label htmlFor="newPassword" className="block text-gray-700 font-medium mb-2">
+              <label
+                htmlFor="newPassword"
+                className="block text-gray-700 dark:text-gray-300 font-medium mb-2"
+              >
                 New Password
               </label>
               <input
@@ -131,12 +134,15 @@ const Profile: React.FC = () => {
                 id="newPassword"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
+                className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400"
                 placeholder="Enter new password (min 8 characters)"
               />
             </div>
             <div>
-              <label htmlFor="confirmPassword" className="block text-gray-700 font-medium mb-2">
+              <label
+                htmlFor="confirmPassword"
+                className="block text-gray-700 dark:text-gray-300 font-medium mb-2"
+              >
                 Confirm New Password
               </label>
               <input
@@ -144,14 +150,14 @@ const Profile: React.FC = () => {
                 id="confirmPassword"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
+                className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400"
                 placeholder="Confirm new password"
               />
             </div>
             <div>
               <button
                 onClick={handlePasswordChange}
-                className="w-full px-4 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200"
+                className="w-full px-4 py-3 bg-blue-500 dark:bg-blue-600 text-white dark:text-gray-200 rounded-lg hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors duration-200"
               >
                 Change Password
               </button>
@@ -160,20 +166,24 @@ const Profile: React.FC = () => {
         </div>
 
         {/* Favorite Cars Section */}
-        <h2 className="text-xl font-semibold text-gray-800 mb-4 text-center">Your Favorite Cars</h2>
+        <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4 text-center">
+          Your Favorite Cars
+        </h2>
         {favorites.length === 0 ? (
-          <p className="text-gray-600 text-center">You haven't added any favorite cars yet.</p>
+          <p className="text-gray-600 dark:text-gray-400 text-center">
+            You haven't added any favorite cars yet.
+          </p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full">
             {favorites.map((car) => (
-              <div key={car.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
+              <div key={car.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
                 <img
                   src={
                     car.imageUrl
                       ? car.imageUrl.startsWith("http")
                         ? car.imageUrl
                         : BASE_URL + car.imageUrl
-                      : "/placeholder.png" // Local placeholder
+                      : "/placeholder.png"
                   }
                   alt={car.vehicle}
                   className="w-full h-48 object-cover rounded-t-lg"
@@ -186,13 +196,15 @@ const Profile: React.FC = () => {
                   }}
                 />
                 <div className="p-4">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-2">{car.vehicle}</h3>
-                  <p className="text-gray-600 mb-4">
+                  <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                    {car.vehicle}
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-4">
                     {car.color} - ${car.price.toLocaleString()} - {car.yearMade}
                   </p>
                   <button
                     onClick={() => removeFavorite(car.id)}
-                    className="w-full px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-200"
+                    className="w-full px-4 py-2 bg-red-500 dark:bg-red-600 text-white dark:text-gray-200 rounded-lg hover:bg-red-600 dark:hover:bg-red-700 transition-colors duration-200"
                   >
                     Remove from Favorites
                   </button>
@@ -206,6 +218,5 @@ const Profile: React.FC = () => {
     </div>
   );
 };
-
 
 export default Profile;

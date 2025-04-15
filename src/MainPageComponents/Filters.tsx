@@ -15,9 +15,9 @@ const Filters: React.FC<FiltersProps> = ({
   horsePowerRange,
   setHorsePowerRange,
 }) => (
-  <div className="p-6 m-4 bg-white rounded-lg shadow-lg">
+  <div className="p-6 m-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
     <div className="mb-6">
-      <h5 className="text-lg font-semibold text-gray-800 mb-3">
+      <h5 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">
         Price Range: ${priceRange[0].toLocaleString()} - ${priceRange[1].toLocaleString()}
       </h5>
       <div className="px-2">
@@ -40,7 +40,7 @@ const Filters: React.FC<FiltersProps> = ({
       </div>
     </div>
     <div>
-      <h5 className="text-lg font-semibold text-gray-800 mb-3">
+      <h5 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">
         Horsepower Range: {horsePowerRange[0]} - {horsePowerRange[1]} HP
       </h5>
       <div className="px-2">

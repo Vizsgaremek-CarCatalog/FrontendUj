@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import axios from "../services/axiosConfig";
 import { Car } from "../MainPageComponents/types";
 
-
-
 interface AddCarFormProps {
   onAddCar: (car: Car) => void;
   setError: (error: string | null) => void;
@@ -83,7 +81,6 @@ const AddCarForm: React.FC<AddCarFormProps> = ({ onAddCar, setError }) => {
         headers: { "Content-Type": "multipart/form-data" },
       });
       const newCarData: Car = response.data;
-      // Ensure imageUrl is set correctly, assuming backend returns it
       if (newCarData.imageUrl && !newCarData.imageUrl.startsWith("http")) {
         newCarData.imageUrl = `http://localhost:3000${newCarData.imageUrl}`;
       }
@@ -111,8 +108,8 @@ const AddCarForm: React.FC<AddCarFormProps> = ({ onAddCar, setError }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-      <h3 className="text-xl font-semibold text-gray-800 mb-4">Add New Car</h3>
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
+      <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">Add New Car</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {[
           { id: "vehicle", label: "Vehicle Name", type: "text" },
@@ -126,7 +123,7 @@ const AddCarForm: React.FC<AddCarFormProps> = ({ onAddCar, setError }) => {
           { id: "horsePower", label: "Horsepower", type: "number" },
         ].map(({ id, label, type }) => (
           <div key={id}>
-            <label htmlFor={id} className="block text-gray-700 font-medium mb-2">
+            <label htmlFor={id} className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
               {label}
             </label>
             <input
@@ -139,12 +136,12 @@ const AddCarForm: React.FC<AddCarFormProps> = ({ onAddCar, setError }) => {
                   [id]: type === "number" ? +e.target.value : e.target.value,
                 })
               }
-              className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
+              className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400"
             />
           </div>
         ))}
         <div>
-          <label htmlFor="image" className="block text-gray-700 font-medium mb-2">
+          <label htmlFor="image" className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
             Car Image
           </label>
           <input
@@ -152,26 +149,28 @@ const AddCarForm: React.FC<AddCarFormProps> = ({ onAddCar, setError }) => {
             id="image"
             accept="image/jpeg,image/png,image/gif"
             onChange={(e) => setSelectedImage(e.target.files?.[0] || null)}
-            className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
+            className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400"
           />
         </div>
         <div className="md:col-span-2">
-          <label htmlFor="description" className="block text-gray-700 font-medium mb-2">
+          <label htmlFor="description" className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
             Description
           </label>
           <textarea
             id="description"
             value={newCar.description}
             onChange={(e) => setNewCar({ ...newCar, description: e.target.value })}
-            className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 resize-y"
+            className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 resize-y"
           />
         </div>
         <div className="md:col-span-2">
           <button
             onClick={handleSubmit}
             disabled={isSubmitting}
-            className={`w-full px-4 py-3 rounded-lg text-white transition-colors duration-200 ${
-              isSubmitting ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
+            className={`w-full px-4 py-3 rounded-lg text-white dark:text-gray-200 transition-colors duration-200 ${
+              isSubmitting
+                ? "bg-gray-400 dark:bg-gray-600 cursor-not-allowed"
+                : "bg-blue-500 dark:bg-blue-600 hover:bg-blue-600 dark:hover:bg-blue-700"
             }`}
           >
             {isSubmitting ? "Adding..." : "Add Car"}

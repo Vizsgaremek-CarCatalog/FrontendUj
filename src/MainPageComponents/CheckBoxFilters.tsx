@@ -64,16 +64,16 @@ const CheckboxFilters: React.FC<CheckboxFiltersProps> = ({ onFilterChange }) => 
         ? currentValues.filter((item) => item !== value)
         : [...currentValues, value];
       const newFilters = { ...prev, [category]: updatedValues };
-      onFilterChange(newFilters); // Notify parent of filter change
+      onFilterChange(newFilters);
       return newFilters;
     });
   };
 
   return (
-    <div className="p-6 m-4 bg-white rounded-lg shadow-lg">
+    <div className="p-6 m-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
       <button
         onClick={() => setOpen(!open)}
-        className="w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200 mb-4"
+        className="w-full px-4 py-2 bg-blue-500 dark:bg-blue-600 text-white dark:text-gray-200 rounded-lg hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors duration-200 mb-4"
       >
         {open ? "Hide Filters" : "Show Filters"}
       </button>
@@ -82,7 +82,7 @@ const CheckboxFilters: React.FC<CheckboxFiltersProps> = ({ onFilterChange }) => 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Manufacturer */}
           <div>
-            <h6 className="text-lg font-semibold text-gray-800 mb-3">Manufacturer</h6>
+            <h6 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Manufacturer</h6>
             {manufacturers.map((manufacturer) => (
               <div key={manufacturer} className="flex items-center mb-2">
                 <input
@@ -90,11 +90,11 @@ const CheckboxFilters: React.FC<CheckboxFiltersProps> = ({ onFilterChange }) => 
                   id={`manufacturer-${manufacturer}`}
                   checked={filters.manufacturers.includes(manufacturer)}
                   onChange={() => handleCheckboxChange("manufacturers", manufacturer)}
-                  className="h-4 w-4 text-blue-500 focus:ring-blue-400 border-gray-300 rounded"
+                  className="h-4 w-4 text-blue-500 dark:text-blue-400 focus:ring-blue-400 dark:focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded"
                 />
                 <label
                   htmlFor={`manufacturer-${manufacturer}`}
-                  className="ml-2 text-gray-700"
+                  className="ml-2 text-gray-700 dark:text-gray-300"
                 >
                   {manufacturer}
                 </label>
@@ -104,7 +104,7 @@ const CheckboxFilters: React.FC<CheckboxFiltersProps> = ({ onFilterChange }) => 
 
           {/* Type */}
           <div>
-            <h6 className="text-lg font-semibold text-gray-800 mb-3">Type</h6>
+            <h6 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Type</h6>
             {types.map((type) => (
               <div key={type} className="flex items-center mb-2">
                 <input
@@ -112,9 +112,9 @@ const CheckboxFilters: React.FC<CheckboxFiltersProps> = ({ onFilterChange }) => 
                   id={`type-${type}`}
                   checked={filters.types.includes(type)}
                   onChange={() => handleCheckboxChange("types", type)}
-                  className="h-4 w-4 text-blue-500 focus:ring-blue-400 border-gray-300 rounded"
+                  className="h-4 w-4 text-blue-500 dark:text-blue-400 focus:ring-blue-400 dark:focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded"
                 />
-                <label htmlFor={`type-${type}`} className="ml-2 text-gray-700">
+                <label htmlFor={`type-${type}`} className="ml-2 text-gray-700 dark:text-gray-300">
                   {type}
                 </label>
               </div>
@@ -123,7 +123,7 @@ const CheckboxFilters: React.FC<CheckboxFiltersProps> = ({ onFilterChange }) => 
 
           {/* Color */}
           <div>
-            <h6 className="text-lg font-semibold text-gray-800 mb-3">Color</h6>
+            <h6 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Color</h6>
             {colors.map((color) => (
               <div key={color} className="flex items-center mb-2">
                 <input
@@ -131,9 +131,9 @@ const CheckboxFilters: React.FC<CheckboxFiltersProps> = ({ onFilterChange }) => 
                   id={`color-${color}`}
                   checked={filters.colors.includes(color)}
                   onChange={() => handleCheckboxChange("colors", color)}
-                  className="h-4 w-4 text-blue-500 focus:ring-blue-400 border-gray-300 rounded"
+                  className="h-4 w-4 text-blue-500 dark:text-blue-400 focus:ring-blue-400 dark:focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded"
                 />
-                <label htmlFor={`color-${color}`} className="ml-2 text-gray-700">
+                <label htmlFor={`color-${color}`} className="ml-2 text-gray-700 dark:text-gray-300">
                   {color}
                 </label>
               </div>
@@ -142,7 +142,7 @@ const CheckboxFilters: React.FC<CheckboxFiltersProps> = ({ onFilterChange }) => 
 
           {/* Fuel */}
           <div>
-            <h6 className="text-lg font-semibold text-gray-800 mb-3">Fuel</h6>
+            <h6 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Fuel</h6>
             {fuels.map((fuel) => (
               <div key={fuel} className="flex items-center mb-2">
                 <input
@@ -150,9 +150,9 @@ const CheckboxFilters: React.FC<CheckboxFiltersProps> = ({ onFilterChange }) => 
                   id={`fuel-${fuel}`}
                   checked={filters.fuels.includes(fuel)}
                   onChange={() => handleCheckboxChange("fuels", fuel)}
-                  className="h-4 w-4 text-blue-500 focus:ring-blue-400 border-gray-300 rounded"
+                  className="h-4 w-4 text-blue-500 dark:text-blue-400 focus:ring-blue-400 dark:focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded"
                 />
-                <label htmlFor={`fuel-${fuel}`} className="ml-2 text-gray-700">
+                <label htmlFor={`fuel-${fuel}`} className="ml-2 text-gray-700 dark:text-gray-300">
                   {fuel}
                 </label>
               </div>
@@ -161,7 +161,7 @@ const CheckboxFilters: React.FC<CheckboxFiltersProps> = ({ onFilterChange }) => 
 
           {/* Mass */}
           <div>
-            <h6 className="text-lg font-semibold text-gray-800 mb-3">Mass</h6>
+            <h6 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Mass</h6>
             {massOptions.map((mass) => (
               <div key={mass} className="flex items-center mb-2">
                 <input
@@ -169,9 +169,9 @@ const CheckboxFilters: React.FC<CheckboxFiltersProps> = ({ onFilterChange }) => 
                   id={`mass-${mass}`}
                   checked={filters.massOptions.includes(mass)}
                   onChange={() => handleCheckboxChange("massOptions", mass)}
-                  className="h-4 w-4 text-blue-500 focus:ring-blue-400 border-gray-300 rounded"
+                  className="h-4 w-4 text-blue-500 dark:text-blue-400 focus:ring-blue-400 dark:focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded"
                 />
-                <label htmlFor={`mass-${mass}`} className="ml-2 text-gray-700">
+                <label htmlFor={`mass-${mass}`} className="ml-2 text-gray-700 dark:text-gray-300">
                   {mass}
                 </label>
               </div>
@@ -180,7 +180,7 @@ const CheckboxFilters: React.FC<CheckboxFiltersProps> = ({ onFilterChange }) => 
 
           {/* Year */}
           <div>
-            <h6 className="text-lg font-semibold text-gray-800 mb-3">Year</h6>
+            <h6 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Year</h6>
             {yearOptions.map((year) => (
               <div key={year} className="flex items-center mb-2">
                 <input
@@ -188,9 +188,9 @@ const CheckboxFilters: React.FC<CheckboxFiltersProps> = ({ onFilterChange }) => 
                   id={`year-${year}`}
                   checked={filters.yearOptions.includes(year)}
                   onChange={() => handleCheckboxChange("yearOptions", year)}
-                  className="h-4 w-4 text-blue-500 focus:ring-blue-400 border-gray-300 rounded"
+                  className="h-4 w-4 text-blue-500 dark:text-blue-400 focus:ring-blue-400 dark:focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded"
                 />
-                <label htmlFor={`year-${year}`} className="ml-2 text-gray-700">
+                <label htmlFor={`year-${year}`} className="ml-2 text-gray-700 dark:text-gray-300">
                   {year}
                 </label>
               </div>
