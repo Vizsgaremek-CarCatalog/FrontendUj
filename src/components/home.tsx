@@ -116,51 +116,51 @@ export default function Home() {
 
         <div className="relative z-10 text-center text-white dark:text-gray-200 py-16 w-full">
           <header className="mb-8">
-            <h1 className="text-4xl font-bold">Welcome to our Car Catalog</h1>
-            <p className="text-lg mt-2">Discover the best cars available worldwide!</p>
+            <h1 className="text-4xl font-bold">Explore Our Car Catalog</h1>
+            <p className="text-lg mt-2">Discover a world of vehicles, from classics to modern marvels.</p>
           </header>
           <div className="flex justify-center mt-8">
             <button
               onClick={() => RoutingService.navigateToCars(navigate)}
               className="px-6 py-3 bg-blue-500 dark:bg-blue-600 text-white dark:text-gray-200 rounded-lg shadow-md hover:bg-blue-600 dark:hover:bg-blue-700 transition"
             >
-              View Cars
+              Browse Catalog
             </button>
           </div>
         </div>
 
         <div className="py-16 bg-gray-100 dark:bg-gray-800 text-center w-full">
-          <h2 className="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-200">Why Choose Us?</h2>
+          <h2 className="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-200">Why Use Our Catalog?</h2>
           <div className="flex justify-center space-x-8 w-full px-6">
             <div className="w-1/3 bg-white dark:bg-gray-700 p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Wide Selection</h3>
-              <p className="text-gray-600 dark:text-gray-300">Choose from a wide variety of cars to suit your needs and preferences.</p>
+              <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Extensive Listings</h3>
+              <p className="text-gray-600 dark:text-gray-300">Explore thousands of cars, from vintage classics to cutting-edge EVs.</p>
             </div>
             <div className="w-1/3 bg-white dark:bg-gray-700 p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Affordable Prices</h3>
-              <p className="text-gray-600 dark:text-gray-300">We offer competitive pricing to ensure you get the best deal.</p>
+              <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Detailed Specs</h3>
+              <p className="text-gray-600 dark:text-gray-300">Dive into comprehensive details like horsepower, fuel type, and more.</p>
             </div>
             <div className="w-1/3 bg-white dark:bg-gray-700 p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Trusted by Thousands</h3>
-              <p className="text-gray-600 dark:text-gray-300">Join our community of satisfied customers worldwide.</p>
+              <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Easy Comparison</h3>
+              <p className="text-gray-600 dark:text-gray-300">Compare models side-by-side to find the perfect car for you.</p>
             </div>
           </div>
         </div>
 
         <div className="py-16 bg-gray-900 dark:bg-gray-950 text-center text-white dark:text-gray-200 w-full">
-          <h2 className="text-3xl font-bold mb-6">What Our Customers Say</h2>
+          <h2 className="text-3xl font-bold mb-6">What Enthusiasts Say</h2>
           <div className="flex justify-center space-x-8 w-full px-6">
             <div className="w-1/3 bg-gray-800 dark:bg-gray-900 p-6 rounded-lg shadow-md">
-              <p className="text-gray-300 dark:text-gray-400">"I found my dream car here! The process was so easy and seamless."</p>
-              <p className="mt-4 font-semibold text-gray-200 dark:text-gray-300">- John Doe</p>
+              <p className="text-gray-300 dark:text-gray-400">"This catalog has every car I’ve ever dreamed of, with specs that make my heart race!"</p>
+              <p className="mt-4 font-semibold text-gray-200 dark:text-gray-300">- Mike Carter</p>
             </div>
             <div className="w-1/3 bg-gray-800 dark:bg-gray-900 p-6 rounded-lg shadow-md">
-              <p className="text-gray-300 dark:text-gray-400">"Great selection and amazing prices. Highly recommend this site!"</p>
-              <p className="mt-4 font-semibold text-gray-200 dark:text-gray-300">- Jane Smith</p>
+              <p className="text-gray-300 dark:text-gray-400">"Finding rare classics was so easy, and the details helped me choose the perfect one."</p>
+              <p className="mt-4 font-semibold text-gray-200 dark:text-gray-300">- Emma Davis</p>
             </div>
             <div className="w-1/3 bg-gray-800 dark:bg-gray-900 p-6 rounded-lg shadow-md">
-              <p className="text-gray-300 dark:text-gray-400">"The customer service was excellent. I’ll definitely come back."</p>
-              <p className="mt-4 font-semibold text-gray-200 dark:text-gray-300">- Alex Johnson</p>
+              <p className="text-gray-300 dark:text-gray-400">"The comparison tool is a game-changer for picking my next ride."</p>
+              <p className="mt-4 font-semibold text-gray-200 dark:text-gray-300">- Liam Brooks</p>
             </div>
           </div>
         </div>

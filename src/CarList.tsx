@@ -17,8 +17,8 @@ const CarList: React.FC<CarListProps> = ({ isLoggedIn }) => {
   const [selectedCar, setSelectedCar] = useState<number | null>(null);
   const [selectedCarsForComparison, setSelectedCarsForComparison] = useState<Car[]>([]);
   const [carComments, setCarComments] = useState<{ [key: number]: string[] }>({});
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000000]);
-  const [horsePowerRange, setHorsePowerRange] = useState<[number, number]>([0, 1000]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 3000000]);
+  const [horsePowerRange, setHorsePowerRange] = useState<[number, number]>([0, 1500]);
   const [search, setSearch] = useState("");
   const [sortKey, setSortKey] = useState<keyof Car | "">("");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
