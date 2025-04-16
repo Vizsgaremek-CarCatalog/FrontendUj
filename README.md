@@ -8,7 +8,7 @@ Before you begin, ensure you have the following installed:
 
 - **Node.js** (v16.x or higher) - [Download](https://nodejs.org/)
 - **npm** (v8.x or higher, comes with Node.js) or **Yarn** (optional)
-- A running backend server at `http://localhost:3000` (refer to the backend repository for setup)
+- A running backend server at `http://localhost:3000` 
 - **Git** (optional, for cloning the repository)
 
 ## Installation
@@ -32,7 +32,6 @@ Using npm:
 
 
 Available Scripts
-npm start: Runs the app in development mode.
+npm run dev : Runs the app
 npm run build: Builds the app for production.
 npm test: Runs tests (if configured).
-npm run eject: Ejects from Create React App (not recommended).

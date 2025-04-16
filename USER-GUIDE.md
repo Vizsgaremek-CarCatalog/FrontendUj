@@ -74,6 +74,7 @@ Welcome to the Car Showcase, a platform for browsing and managing cars. This gui
 1. **Access the Dashboard**
    - Log in as an admin (requires `ADMIN` role).
    - Click “Admin” in the navigation bar.
+   - Admin Password: SuperSecretAdminPassword123!
 
 2. **Manage Cars**
    - Add new cars using the form.
@@ -89,7 +90,7 @@ Welcome to the Car Showcase, a platform for browsing and managing cars. This gui
 
 - **Can’t log in?** Check your email/password or register a new account.
 - **Cars not loading?** Ensure the backend server is running.
-- **Contact support**: Email `info@carshowcase.com` (replace with actual contact).
+- **Contact support**: Email `info@carshowcase.com`.
 
 
 ---
